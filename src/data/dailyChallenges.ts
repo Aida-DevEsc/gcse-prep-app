@@ -43,10 +43,10 @@ export const dailyChallengePool: Question[] = [
   },
   {
     id: 'dc-6',
-    topicId: 'eng-macbeth-themes',
-    question: 'In Macbeth, what does the recurring motif of blood primarily symbolise?',
-    options:['Guilt and violence','Royalty and power','Love and loyalty','Nature and decay'],correctAnswer:0,
-    explanation: 'Blood in Macbeth symbolises guilt and the consequences of violence. Lady Macbeth\'s obsessive hand-washing in Act 5 shows her inability to cleanse her guilt.',
+    topicId: 'eng-rj-themes',
+    question: 'In Romeo and Juliet, what does the Prologue\'s phrase "star-crossed lovers" primarily establish?',
+    options:['That fate controls the lovers\' tragic destiny','That the lovers are astronomers','That the play is a comedy','That the families reconcile immediately'],correctAnswer:0,
+    explanation: '"Star-crossed" establishes the theme of fate from the outset, telling the audience the lovers are doomed before the play even begins, creating dramatic irony throughout.',
     difficulty: 'higher',
   },
   {
@@ -244,10 +244,10 @@ export const dailyChallengePool: Question[] = [
   },
   {
     id: 'dc-30',
-    topicId: 'eng-macbeth-chars',
-    question: 'Which character says "Look like the innocent flower, but be the serpent under\'t"?',
-    options:['Macbeth','Duncan','Lady Macbeth','Banquo'],correctAnswer:2,
-    explanation: 'Lady Macbeth says this in Act 1, Scene 5, advising Macbeth to appear innocent while plotting Duncan\'s murder. It reveals her manipulative nature.',
+    topicId: 'eng-rj-characters',
+    question: 'Which character says "a plague o\' both your houses" as he dies?',
+    options:['Romeo','Tybalt','Mercutio','Friar Laurence'],correctAnswer:2,
+    explanation: 'Mercutio says this three times as he is dying in Act 3, Scene 1, cursing both the Montagues and Capulets for the pointless feud that has led to his death.',
     difficulty: 'intermediate',
   },
 ];

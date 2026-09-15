@@ -1520,11 +1520,11 @@ const englishQuestions: Question[] = [
   },
   {
     id: 'mock-english-q5',
-    topicId: 'eng-macbeth-characters',
-    question: 'In Shakespeare\'s "Macbeth", who prophesies that Macbeth will become king?',
-    options: ['The Three Witches', 'Lady Macbeth', 'Banquo', 'King Duncan'],
+    topicId: 'eng-rj-characters',
+    question: 'In Shakespeare\'s "Romeo and Juliet", who is Romeo in love with before he meets Juliet?',
+    options: ['Rosaline', 'Lady Capulet', 'The Nurse', 'Paris\'s sister'],
     correctAnswer: 0,
-    explanation: 'The Three Witches (or Weird Sisters) give Macbeth three prophecies in Act 1, including that he will become Thane of Cawdor and eventually King of Scotland.',
+    explanation: 'At the start of the play, Romeo is melodramatically infatuated with Rosaline, a Capulet who does not return his affection. This shallow, unrequited love contrasts with his later passion for Juliet.',
     difficulty: 'foundation',
   },
   {
@@ -1559,10 +1559,10 @@ const englishQuestions: Question[] = [
   },
   {
     id: 'mock-english-q9',
-    topicId: 'eng-macbeth-themes',
-    question: 'Which of the following is a central theme in "Macbeth"?',
-    options:['Childhood innocence','The importance of education','The beauty of nature','Ambition and its destructive consequences'],correctAnswer:3,
-    explanation: 'Ambition is a central theme in Macbeth. Macbeth\'s ambition, spurred by the witches\' prophecy and Lady Macbeth\'s encouragement, leads him to murder Duncan and ultimately brings about his own destruction.',
+    topicId: 'eng-rj-themes',
+    question: 'Which of the following is a central theme in "Romeo and Juliet"?',
+    options:['The importance of education','The beauty of nature','Fate and the inevitability of the lovers\' tragic deaths','Childhood innocence'],correctAnswer:2,
+    explanation: 'Fate is a central theme, established in the Prologue which calls the pair "star-crossed lovers" and reveals their deaths before the play even begins, creating dramatic irony throughout.',
     difficulty: 'foundation',
   },
   {
@@ -1598,10 +1598,10 @@ const englishQuestions: Question[] = [
   },
   {
     id: 'mock-english-q13',
-    topicId: 'eng-macbeth-characters',
-    question: 'How does Shakespeare present Lady Macbeth in Act 1?',
-    options:['As a comic character who provides light relief','As a loyal and obedient wife who follows Macbeth\'s lead','As a gentle mother figure who cares for her children','As ambitious, manipulative, and determined to gain power through her husband'],correctAnswer:3,
-    explanation: 'In Act 1, Lady Macbeth is presented as ruthlessly ambitious. She questions Macbeth\'s masculinity, calls on dark spirits to "unsex" her, and plans Duncan\'s murder, showing her as the driving force behind the regicide.',
+    topicId: 'eng-rj-characters',
+    question: 'How does Shakespeare present Juliet in Act 1?',
+    options:['As a rebellious teenager who defies her parents from the start','As an obedient, almost childlike daughter who says marriage is "an honour that I dream not of"','As already secretly married','As uninterested in love or marriage'],correctAnswer:1,
+    explanation: 'In Act 1, Juliet is presented as young and dutiful, deferring to her mother\'s wishes about marriage. This makes her rapid development into a decisive, independent woman later in the play all the more striking.',
     difficulty: 'intermediate',
   },
   {
@@ -1669,10 +1669,10 @@ const englishQuestions: Question[] = [
   // HIGHER (21-27)
   {
     id: 'mock-english-q21',
-    topicId: 'eng-macbeth-themes',
-    question: 'How does Shakespeare use the motif of blood in "Macbeth"?',
-    options:['Blood represents health and vitality throughout the play','Blood is only mentioned once and has no symbolic significance','Blood symbolises guilt and the permanent stain of murder, seen particularly in Lady Macbeth\'s sleepwalking scene','Blood is used as a comic motif to lighten the tone'],correctAnswer:2,
-    explanation: 'Blood is a recurring motif symbolising guilt, violence, and the consequences of ambition. Lady Macbeth\'s "Out, damned spot!" in Act 5 shows that the psychological stain of guilt cannot be washed away.',
+    topicId: 'eng-rj-themes',
+    question: 'How does Shakespeare use light and dark imagery in "Romeo and Juliet"?',
+    options:['Light imagery is never used in the play','Romeo repeatedly describes Juliet using light imagery even though their meetings occur at night, symbolising a love that shines against the surrounding secrecy and danger','Darkness always represents comedy','Light and dark imagery relate only to the setting, not the characters'],correctAnswer:1,
+    explanation: 'Romeo associates Juliet with light and brightness ("she doth teach the torches to burn bright") even during their secret night-time meetings, symbolising a love that illuminates the darkness of the feud and social danger surrounding them.',
     difficulty: 'higher',
   },
   {
@@ -1702,7 +1702,7 @@ const englishQuestions: Question[] = [
       'A character who narrates the story',
     ],
     correctAnswer: 0,
-    explanation: 'A foil is a character who contrasts with another character (usually the protagonist) to highlight particular qualities. For example, Banquo serves as a foil to Macbeth, showing integrity where Macbeth shows corruption.',
+    explanation: 'A foil is a character who contrasts with another character (usually the protagonist) to highlight particular qualities. For example, Mercutio serves as a foil to Romeo, showing cynical wit where Romeo shows romantic idealism.',
     difficulty: 'higher',
   },
   {
@@ -1732,16 +1732,16 @@ const englishQuestions: Question[] = [
   // FURTHER (28-30)
   {
     id: 'mock-english-q28',
-    topicId: 'eng-macbeth-themes',
-    question: 'How does Shakespeare present the theme of the supernatural and its connection to disruption of the natural order in "Macbeth"?',
+    topicId: 'eng-rj-themes',
+    question: 'How does Shakespeare use dramatic irony and coincidence to reinforce the theme of fate in "Romeo and Juliet"?',
     options: [
-      'The witches, apparitions, and unnatural events (e.g., horses eating each other) suggest that Macbeth\'s actions violate the divine order, the Great Chain of Being',
-      'The supernatural is used only for entertainment with no deeper meaning',
-      'Shakespeare rejects all belief in the supernatural',
-      'The supernatural events are all explained rationally by the end of the play',
+      'The Prologue reveals the tragic ending in advance, and events like the plague delaying Friar Laurence\'s letter and Romeo arriving moments before Juliet wakes suggest an inescapable, fated outcome',
+      'Fate has no role in the play\'s structure',
+      'The audience is never told how the play will end',
+      'All the tragic events are explained as deliberate choices with no element of chance',
     ],
     correctAnswer: 0,
-    explanation: 'Shakespeare uses the supernatural to reflect the disruption of the natural order. The witches tempt Macbeth, and after Duncan\'s murder, unnatural events occur (darkness at noon, animals acting strangely), reflecting the Jacobean belief in the Great Chain of Being.',
+    explanation: 'Shakespeare builds dramatic irony from the Prologue\'s revelation of the "star-crossed lovers", then reinforces fate through a chain of unlucky coincidences — the delayed letter, Romeo\'s timing at the tomb — suggesting forces beyond the characters\' control determine the tragic outcome.',
     difficulty: 'further',
   },
   {
