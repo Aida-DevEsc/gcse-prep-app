@@ -5,6 +5,7 @@ import { getSubjectById } from '../data/index';
 import { getMasteryLevel, getMasteryColor } from '../types';
 import { examInfo } from '../data/examInfo';
 import { getDiagnosticSections, getSubjectStatuses, countStatuses, STATUS_META } from '../utils/diagnostic';
+import SchoolResourcesCard from './SchoolResourcesCard';
 
 export default function SubjectPage() {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -82,6 +83,9 @@ export default function SubjectPage() {
           )}
         </div>
       )}
+
+      {/* The school's revision booklet guidance for this subject */}
+      <SchoolResourcesCard key={subject.id} subjectId={subject.id} subjectName={subject.name} />
 
       {/* Progress bar */}
       <div className="w-full bg-slate-100 rounded-full h-3 mb-6">
