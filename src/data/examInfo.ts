@@ -60,9 +60,9 @@ export const examInfo: Record<string, ExamInfo> = {
     specCode: '1HI0',
     papers: [
       { name: 'Paper 1 (Thematic + British Depth)', topicsCovered: 'Medicine in Britain, c1250–present + Early Elizabethan England, 1558–88', marks: 84, weighting: '30%', duration: '1h 45m' },
-      { name: 'Paper 2 (Period Study + Modern Depth)', topicsCovered: 'Superpower Relations & the Cold War, 1941–91 + Weimar & Nazi Germany, 1918–39', marks: 84, weighting: '40%', duration: '1h 45m' },
+      { name: 'Paper 2 (Period Study + Modern Depth)', topicsCovered: 'The USA, 1929–2000: Boom, Bust and Civil Rights + Weimar & Nazi Germany, 1918–39', marks: 84, weighting: '40%', duration: '1h 45m' },
     ],
-    notes: 'The Purbeck School\'s own revision booklet times these as four separate content blocks for revision purposes (Germany, Medicine, the Period Study, and Elizabethan England) even though they sit across two combined exam papers.',
+    notes: 'The Purbeck School\'s own revision booklet times these as four separate content blocks for revision purposes (Germany, Medicine, the USA, and Elizabethan England) even though they sit across two combined exam papers.',
   },
   english: {
     board: 'AQA',

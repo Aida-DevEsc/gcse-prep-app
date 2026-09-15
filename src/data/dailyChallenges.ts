@@ -147,10 +147,10 @@ export const dailyChallengePool: Question[] = [
   },
   {
     id: 'dc-18',
-    topicId: 'hist-coldwar-crises',
-    question: 'What event in 1962 brought the USA and USSR closest to nuclear war?',
-    options:['Cuban Missile Crisis','Berlin Wall construction','Korean War','Hungarian Uprising'],correctAnswer:0,
-    explanation: 'The Cuban Missile Crisis (October 1962) was the closest the superpowers came to nuclear war, when Soviet missiles were discovered in Cuba.',
+    topicId: 'hist-usa-vietnam-watergate',
+    question: 'What scandal led to President Nixon becoming the only US president to resign from office?',
+    options:['Watergate','The Iran-Contra affair','The Teapot Dome scandal','The Whitewater scandal'],correctAnswer:0,
+    explanation: 'The Watergate scandal (1972-74), involving a break-in at Democratic Party headquarters and a subsequent cover-up, led to Nixon\'s resignation in August 1974.',
     difficulty: 'intermediate',
   },
   {
