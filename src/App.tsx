@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
+import { ProfileProvider, useProfiles } from './context/ProfileContext';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import SubjectPage from './components/SubjectPage';
@@ -9,9 +10,13 @@ import Checkpoint from './components/Checkpoint';
 import MockTest from './components/MockTest';
 import BadgeDisplay from './components/BadgeDisplay';
 
-export default function App() {
+function ActiveProfileApp() {
+  // Remounting AppProvider by key when the profile changes gives each profile a clean,
+  // independent load of its own saved progress with no cross-profile state bleed.
+  const { activeProfile } = useProfiles();
+
   return (
-    <AppProvider>
+    <AppProvider key={activeProfile.id} profileId={activeProfile.id}>
       <HashRouter>
         <Routes>
           <Route element={<Layout />}>
@@ -26,5 +31,13 @@ export default function App() {
         </Routes>
       </HashRouter>
     </AppProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <ProfileProvider>
+      <ActiveProfileApp />
+    </ProfileProvider>
   );
 }

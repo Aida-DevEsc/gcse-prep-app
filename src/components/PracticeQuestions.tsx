@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Question } from '../types';
+import type { Question, DifficultyLevel } from '../types';
 import { useApp } from '../context/AppContext';
 import { XP_REWARDS } from '../utils/xp';
 
@@ -9,7 +9,17 @@ interface Props {
   subjectColor: string;
   /** Number of questions per practice set. If pool is smaller, all questions are used. Defaults to 10. */
   setSize?: number;
+  /** Bias the difficulty mix of the practice set towards this level (usually set from a quick topic diagnostic). */
+  startLevel?: DifficultyLevel;
 }
+
+/** Difficulty weighting per starting level: mostly that level and the one above, a little below for confidence. */
+const LEVEL_WEIGHTS: Record<DifficultyLevel, Record<DifficultyLevel, number>> = {
+  foundation: { foundation: 0.6, intermediate: 0.3, higher: 0.1, further: 0 },
+  intermediate: { foundation: 0.2, intermediate: 0.45, higher: 0.3, further: 0.05 },
+  higher: { foundation: 0.05, intermediate: 0.25, higher: 0.5, further: 0.2 },
+  further: { foundation: 0, intermediate: 0.15, higher: 0.35, further: 0.5 },
+};
 
 // Fisher-Yates shuffle (returns new array, doesn't mutate)
 function shuffle<T>(arr: T[]): T[] {
@@ -21,8 +31,9 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-// Pick a balanced subset: shuffle then try to take a mix of difficulties
-function pickSet(pool: Question[], size: number): Question[] {
+// Pick a subset weighted by difficulty. Defaults to an even 30/30/30/10 mix; pass a
+// startLevel to bias towards questions matching the student's diagnosed level.
+function pickSet(pool: Question[], size: number, startLevel?: DifficultyLevel): Question[] {
   if (pool.length <= size) return shuffle(pool);
 
   const byDifficulty: Record<string, Question[]> = {
@@ -32,12 +43,12 @@ function pickSet(pool: Question[], size: number): Question[] {
     further: shuffle(pool.filter(q => q.difficulty === 'further')),
   };
 
-  // Aim for an even mix; fall back to whatever is available
+  const weights = startLevel ? LEVEL_WEIGHTS[startLevel] : { foundation: 0.3, intermediate: 0.3, higher: 0.3, further: 0.1 };
   const targets: Record<string, number> = {
-    foundation: Math.ceil(size * 0.3),
-    intermediate: Math.ceil(size * 0.3),
-    higher: Math.ceil(size * 0.3),
-    further: Math.ceil(size * 0.1),
+    foundation: Math.round(size * weights.foundation),
+    intermediate: Math.round(size * weights.intermediate),
+    higher: Math.round(size * weights.higher),
+    further: Math.round(size * weights.further),
   };
 
   const picked: Question[] = [];
@@ -53,12 +64,12 @@ function pickSet(pool: Question[], size: number): Question[] {
   return shuffle(picked).slice(0, size);
 }
 
-export default function PracticeQuestions({ questions, topicId, subjectColor, setSize = 10 }: Props) {
+export default function PracticeQuestions({ questions, topicId, subjectColor, setSize = 10, startLevel }: Props) {
   const { dispatch } = useApp();
   const poolSize = questions.length;
   const renewable = poolSize > setSize;
 
-  const [activeSet, setActiveSet] = useState<Question[]>(() => pickSet(questions, setSize));
+  const [activeSet, setActiveSet] = useState<Question[]>(() => pickSet(questions, setSize, startLevel));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -104,7 +115,7 @@ export default function PracticeQuestions({ questions, topicId, subjectColor, se
   };
 
   const startNewSet = () => {
-    setActiveSet(pickSet(questions, setSize));
+    setActiveSet(pickSet(questions, setSize, startLevel));
     setCurrentIndex(0);
     setSelectedAnswer(null);
     setShowExplanation(false);
@@ -177,6 +188,7 @@ export default function PracticeQuestions({ questions, topicId, subjectColor, se
         <p className="text-sm text-slate-500">
           Question {currentIndex + 1} of {activeSet.length}
           {renewable && <span className="ml-2 text-xs text-indigo-500">(set {setsCompleted + 1} • {poolSize} in pool)</span>}
+          {startLevel && <span className="ml-2 text-xs text-slate-400">· started at {startLevel} level</span>}
         </p>
         <span className={`text-xs px-2 py-1 rounded-full ${difficultyColors[question.difficulty]}`}>
           {question.difficulty}

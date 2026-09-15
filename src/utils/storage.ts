@@ -1,6 +1,23 @@
-import type { UserState } from '../types';
+import type { UserState, Profile, StudyPlan } from '../types';
 
-const STORAGE_KEY = 'aceprep-gcse-state';
+// Legacy single-user key (pre-profiles). Never deleted — kept as a safety-net backup.
+const LEGACY_STATE_KEY = 'aceprep-gcse-state';
+
+const PROFILES_KEY = 'aceprep-profiles';
+const ACTIVE_PROFILE_KEY = 'aceprep-active-profile';
+const stateKeyFor = (profileId: string) => `aceprep-gcse-state-${profileId}`;
+
+export function getDefaultStudyPlan(): StudyPlan {
+  return [
+    { day: 'Mon', subjectId: null, minutes: 30 },
+    { day: 'Tue', subjectId: null, minutes: 30 },
+    { day: 'Wed', subjectId: null, minutes: 30 },
+    { day: 'Thu', subjectId: null, minutes: 30 },
+    { day: 'Fri', subjectId: null, minutes: 30 },
+    { day: 'Sat', subjectId: null, minutes: 45 },
+    { day: 'Sun', subjectId: null, minutes: 0 },
+  ];
+}
 
 export function getDefaultState(): UserState {
   return {
@@ -17,22 +34,135 @@ export function getDefaultState(): UserState {
     savedVideos: {},
     totalQuestionsAnswered: 0,
     totalCorrectAnswers: 0,
+    studyPlan: getDefaultStudyPlan(),
   };
 }
 
-export function loadState(): UserState {
+// ---------- Per-profile state ----------
+
+export function loadState(profileId: string): UserState {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(stateKeyFor(profileId));
     if (saved) {
-      return { ...getDefaultState(), ...JSON.parse(saved) };
+      const parsed = JSON.parse(saved);
+      return { ...getDefaultState(), ...parsed, studyPlan: parsed.studyPlan?.length ? parsed.studyPlan : getDefaultStudyPlan() };
     }
   } catch { /* ignore */ }
   return getDefaultState();
 }
 
-export function saveState(state: UserState): void {
+export function saveState(profileId: string, state: UserState): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(stateKeyFor(profileId), JSON.stringify(state));
+  } catch { /* ignore */ }
+}
+
+// ---------- Profiles ----------
+
+function makeProfileId(): string {
+  return `profile-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export function loadProfiles(): Profile[] {
+  try {
+    const saved = localStorage.getItem(PROFILES_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return [];
+}
+
+export function saveProfiles(profiles: Profile[]): void {
+  try {
+    localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+  } catch { /* ignore */ }
+}
+
+export function getActiveProfileId(): string | null {
+  try {
+    return localStorage.getItem(ACTIVE_PROFILE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setActiveProfileId(id: string): void {
+  try {
+    localStorage.setItem(ACTIVE_PROFILE_KEY, id);
+  } catch { /* ignore */ }
+}
+
+/**
+ * Ensures profiles exist. If this is the very first time profiles are being introduced
+ * and legacy single-user progress exists, migrate it into a new profile so nothing is lost.
+ * Safe to call multiple times — it's a no-op once profiles already exist.
+ * Returns { profiles, activeId, migrated } so callers can show a one-time notice.
+ */
+export function ensureProfilesInitialised(): { profiles: Profile[]; activeId: string; migrated: boolean } {
+  let profiles = loadProfiles();
+  let migrated = false;
+
+  if (profiles.length === 0) {
+    const legacyRaw = (() => {
+      try {
+        return localStorage.getItem(LEGACY_STATE_KEY);
+      } catch {
+        return null;
+      }
+    })();
+
+    const newProfile: Profile = {
+      id: makeProfileId(),
+      name: legacyRaw ? 'My Progress' : 'Player 1',
+      avatar: '🎓',
+      createdAt: new Date().toISOString(),
+    };
+
+    if (legacyRaw) {
+      // Carry the existing single-user progress over untouched.
+      try {
+        localStorage.setItem(stateKeyFor(newProfile.id), legacyRaw);
+        migrated = true;
+      } catch { /* ignore */ }
+    }
+
+    profiles = [newProfile];
+    saveProfiles(profiles);
+    setActiveProfileId(newProfile.id);
+    return { profiles, activeId: newProfile.id, migrated };
+  }
+
+  let activeId = getActiveProfileId();
+  if (!activeId || !profiles.some(p => p.id === activeId)) {
+    activeId = profiles[0].id;
+    setActiveProfileId(activeId);
+  }
+
+  return { profiles, activeId, migrated: false };
+}
+
+export function createProfile(name: string, avatar: string, yearGroup?: string): Profile {
+  const profiles = loadProfiles();
+  const profile: Profile = {
+    id: makeProfileId(),
+    name: name.trim() || `Profile ${profiles.length + 1}`,
+    avatar,
+    yearGroup,
+    createdAt: new Date().toISOString(),
+  };
+  saveProfiles([...profiles, profile]);
+  return profile;
+}
+
+export function updateProfile(id: string, patch: Partial<Omit<Profile, 'id' | 'createdAt'>>): void {
+  const profiles = loadProfiles().map(p => (p.id === id ? { ...p, ...patch } : p));
+  saveProfiles(profiles);
+}
+
+export function deleteProfile(id: string): void {
+  const profiles = loadProfiles().filter(p => p.id !== id);
+  saveProfiles(profiles);
+  try {
+    localStorage.removeItem(stateKeyFor(id));
   } catch { /* ignore */ }
 }
 

@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getSubjectById } from '../data/index';
 import { getMasteryLevel, getMasteryColor } from '../types';
+import { examInfo } from '../data/examInfo';
 
 export default function SubjectPage() {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -28,6 +29,8 @@ export default function SubjectPage() {
   };
 
   const checkpointsForSubject = state.checkpointResults.filter(c => c.subjectId === subject.id);
+  const exam = examInfo[subject.id];
+  const [examOpen, setExamOpen] = useState(false);
 
   return (
     <div className="p-4 md:p-8 max-w-5xl mx-auto">
@@ -43,6 +46,35 @@ export default function SubjectPage() {
           <p className="text-xs text-slate-400">{completedTopics}/{allTopics.length} topics mastered</p>
         </div>
       </div>
+
+      {/* Exam structure (from the school's own revision guide / exam board spec) */}
+      {exam && (
+        <div className="bg-slate-800 rounded-xl mb-6 overflow-hidden">
+          <button
+            onClick={() => setExamOpen(o => !o)}
+            className="w-full flex items-center justify-between px-4 py-3 text-left"
+          >
+            <span className="text-sm font-semibold text-white flex items-center gap-2">
+              🎓 How you're assessed — {exam.board} {exam.specCode}
+            </span>
+            <span className="text-slate-400 text-xs">{examOpen ? '▲ Hide' : '▼ Show'}</span>
+          </button>
+          {examOpen && (
+            <div className="px-4 pb-4 space-y-2">
+              {exam.papers.map(p => (
+                <div key={p.name} className="bg-slate-700/50 rounded-lg p-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                    <span className="text-sm font-semibold text-white">{p.name}</span>
+                    <span className="text-xs text-slate-300">{p.marks} marks • {p.weighting} • {p.duration}</span>
+                  </div>
+                  <p className="text-xs text-slate-300">{p.topicsCovered}</p>
+                </div>
+              ))}
+              {exam.notes && <p className="text-xs text-slate-400 pt-1">ℹ️ {exam.notes}</p>}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Progress bar */}
       <div className="w-full bg-slate-100 rounded-full h-3 mb-6">

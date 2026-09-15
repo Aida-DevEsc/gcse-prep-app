@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { useProfiles } from '../context/ProfileContext';
 import { levelProgress } from '../utils/xp';
+import ProfileSwitcher from './ProfileSwitcher';
 
 const subjects = [
   { id: 'maths', name: 'Maths', icon: '📐', path: '/subject/maths' },
@@ -14,6 +16,7 @@ const subjects = [
 
 export default function Layout() {
   const { state } = useApp();
+  const { justMigrated, dismissMigrationNotice, activeProfile } = useProfiles();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const closeSidebar = () => setSidebarOpen(false);
@@ -31,10 +34,7 @@ export default function Layout() {
           <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">A</div>
           <span className="font-bold text-slate-800">AcePrep</span>
         </NavLink>
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <span>🔥 {state.currentStreak}</span>
-          <span className="text-indigo-600 font-semibold">Lv{state.level}</span>
-        </div>
+        <ProfileSwitcher />
       </div>
 
       {/* Mobile overlay */}
@@ -64,6 +64,11 @@ export default function Layout() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+        </div>
+
+        {/* Profile switcher */}
+        <div className="px-4 py-3 border-b border-slate-200 hidden md:block">
+          <ProfileSwitcher align="left" />
         </div>
 
         {/* XP & Level */}
@@ -167,6 +172,15 @@ export default function Layout() {
 
       {/* Main content */}
       <main className="flex-1 overflow-y-auto pt-14 md:pt-0">
+        {justMigrated && (
+          <div className="bg-emerald-50 border-b border-emerald-200 px-4 py-2.5 flex items-center gap-3 text-sm text-emerald-800">
+            <span>✅</span>
+            <span className="flex-1">
+              We've set up a profile called <strong>"{activeProfile.name}"</strong> with all of your existing progress — nothing was lost. You can rename it or add more profiles from the switcher above.
+            </span>
+            <button onClick={dismissMigrationNotice} className="text-emerald-600 hover:text-emerald-800 font-bold px-1">✕</button>
+          </div>
+        )}
         <Outlet />
       </main>
     </div>

@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getSubjectById } from '../data/index';
+import { examInfo } from '../data/examInfo';
 import { XP_REWARDS } from '../utils/xp';
+import type { DifficultyLevel } from '../types';
 import Flashcards from './Flashcards';
 import YouTubeSection from './YouTubeSection';
 import PracticeQuestions from './PracticeQuestions';
+import TopicDiagnostic from './TopicDiagnostic';
 
 type Tab = 'learn' | 'flashcards' | 'videos' | 'practice';
 
@@ -17,17 +20,30 @@ export default function TopicPage() {
   const subject = getSubjectById(subjectId || '');
   if (!subject) return <div className="p-8 text-center text-slate-500">Subject not found.</div>;
 
+  const unit = subject.units.find(u => u.topics.some(t => t.id === topicId));
   const topic = subject.units.flatMap(u => u.topics).find(t => t.id === topicId);
   if (!topic) return <div className="p-8 text-center text-slate-500">Topic not found.</div>;
 
   const progress = state.topicProgress[topic.id];
   const mastery = progress?.masteryPercent || 0;
+  const exam = examInfo[subject.id];
 
   const handleExplanationRead = () => {
     if (!progress?.explanationRead) {
       dispatch({ type: 'SET_TOPIC_PROGRESS', topicId: topic.id, progress: { explanationRead: true } });
       dispatch({ type: 'ADD_XP', amount: XP_REWARDS.EXPLANATION_READ });
     }
+  };
+
+  const [retakingLevelCheck, setRetakingLevelCheck] = useState(false);
+
+  const handleDiagnosticComplete = (level: DifficultyLevel, correct: number, total: number) => {
+    dispatch({
+      type: 'SET_TOPIC_PROGRESS',
+      topicId: topic.id,
+      progress: { diagnosedLevel: level, diagnosedAt: new Date().toISOString(), diagnosedScore: total > 0 ? Math.round((correct / total) * 100) : undefined },
+    });
+    setRetakingLevelCheck(false);
   };
 
   const tabs: { key: Tab; label: string; icon: string }[] = [
@@ -117,6 +133,16 @@ export default function TopicPage() {
       <div className="animate-slide-in">
         {activeTab === 'learn' && (
           <div className="bg-white rounded-xl border border-slate-200 p-6">
+            {exam && (
+              <div className="bg-indigo-50 border border-indigo-100 rounded-lg px-4 py-3 mb-5 text-sm text-indigo-800 flex gap-2">
+                <span>👩‍🏫</span>
+                <span>
+                  As your <strong>{exam.board} {subject.name}</strong> tutor: this is part of{' '}
+                  <strong>{unit?.name}</strong> in the <strong>{exam.specCode}</strong> specification.
+                  {' '}Let's work through it exam-board style, then you'll practise questions written the way {exam.board} actually asks them.
+                </span>
+              </div>
+            )}
             <div className="prose prose-slate max-w-none">
               {topic.explanation.split('\n\n').map((para, i) => (
                 <p key={i} className="text-slate-700 leading-relaxed mb-4">{para}</p>
@@ -152,11 +178,33 @@ export default function TopicPage() {
         )}
 
         {activeTab === 'practice' && (
-          <PracticeQuestions
-            questions={topic.questions}
-            topicId={topic.id}
-            subjectColor={subject.color}
-          />
+          !progress?.diagnosedLevel || retakingLevelCheck ? (
+            <TopicDiagnostic
+              questions={topic.questions}
+              topicName={topic.name}
+              subjectColor={subject.color}
+              onComplete={handleDiagnosticComplete}
+            />
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs text-slate-400">
+                <span>
+                  📍 Started at <strong className="text-slate-600">{progress.diagnosedLevel}</strong> level
+                  {typeof progress.diagnosedScore === 'number' && ` (${progress.diagnosedScore}% on level check)`}
+                </span>
+                <button onClick={() => setRetakingLevelCheck(true)} className="text-indigo-500 hover:text-indigo-700 underline">
+                  Retake level check
+                </button>
+              </div>
+              <PracticeQuestions
+                key={progress.diagnosedLevel}
+                questions={topic.questions}
+                topicId={topic.id}
+                subjectColor={subject.color}
+                startLevel={progress.diagnosedLevel}
+              />
+            </div>
+          )
         )}
       </div>
     </div>

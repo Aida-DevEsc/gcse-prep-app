@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { UserState, TopicProgress, CheckpointResult, DiagnosticResult, Badge, YouTubeVideo } from '../types';
+import type { UserState, TopicProgress, CheckpointResult, DiagnosticResult, Badge, YouTubeVideo, StudyPlan, StudyPlanDay } from '../types';
 import { loadState, saveState } from '../utils/storage';
 import { calculateLevel, XP_REWARDS } from '../utils/xp';
 
@@ -15,7 +15,9 @@ type Action =
   | { type: 'REMOVE_VIDEO'; topicId: string; videoId: string }
   | { type: 'SAVE_VIDEO_SUMMARY'; topicId: string; videoId: string; summary: string }
   | { type: 'ANSWER_QUESTION'; correct: boolean }
-  | { type: 'RESET_STATE' };
+  | { type: 'SET_STUDY_PLAN'; plan: StudyPlan }
+  | { type: 'UPDATE_STUDY_PLAN_DAY'; day: StudyPlanDay['day']; patch: Partial<StudyPlanDay> }
+  | { type: 'RESET_STATE'; profileId: string };
 
 function reducer(state: UserState, action: Action): UserState {
   switch (action.type) {
@@ -129,8 +131,16 @@ function reducer(state: UserState, action: Action): UserState {
         totalQuestionsAnswered: state.totalQuestionsAnswered + 1,
         totalCorrectAnswers: state.totalCorrectAnswers + (action.correct ? 1 : 0),
       };
+    case 'SET_STUDY_PLAN':
+      return { ...state, studyPlan: action.plan, studyPlanUpdatedAt: new Date().toISOString() };
+    case 'UPDATE_STUDY_PLAN_DAY':
+      return {
+        ...state,
+        studyPlan: state.studyPlan.map(d => (d.day === action.day ? { ...d, ...action.patch } : d)),
+        studyPlanUpdatedAt: new Date().toISOString(),
+      };
     case 'RESET_STATE':
-      return loadState();
+      return loadState(action.profileId);
     default:
       return state;
   }
@@ -143,15 +153,20 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | null>(null);
 
-export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, null, loadState);
+/**
+ * Holds the currently active profile's progress. Mount this with `key={profileId}`
+ * from the parent so switching profiles cleanly resets to that profile's own state.
+ */
+export function AppProvider({ profileId, children }: { profileId: string; children: ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, profileId, loadState);
 
   useEffect(() => {
-    saveState(state);
-  }, [state]);
+    saveState(profileId, state);
+  }, [profileId, state]);
 
   useEffect(() => {
     dispatch({ type: 'UPDATE_STREAK' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -52,6 +52,8 @@ export interface Subject {
   diagnosticQuestions: Question[];
 }
 
+export type DifficultyLevel = 'foundation' | 'intermediate' | 'higher' | 'further';
+
 export interface TopicProgress {
   topicId: string;
   questionsAttempted: number;
@@ -61,6 +63,10 @@ export interface TopicProgress {
   explanationRead: boolean;
   videoSummaries: Record<string, string>;
   lastAttempted: string;
+  /** Level the student was placed at after the quick topic diagnostic. Undefined = diagnostic not yet taken. */
+  diagnosedLevel?: DifficultyLevel;
+  diagnosedAt?: string;
+  diagnosedScore?: number;
 }
 
 export interface CheckpointResult {
@@ -99,6 +105,19 @@ export interface DailyChallenge {
   correct: boolean;
 }
 
+export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
+
+export interface StudyPlanDay {
+  day: WeekDay;
+  /** null = rest day */
+  subjectId: string | null;
+  /** Optional: focus on one specific topic that day instead of general subject revision */
+  topicId?: string | null;
+  minutes: number;
+}
+
+export type StudyPlan = StudyPlanDay[];
+
 export interface UserState {
   xp: number;
   level: number;
@@ -113,6 +132,16 @@ export interface UserState {
   savedVideos: Record<string, YouTubeVideo[]>;
   totalQuestionsAnswered: number;
   totalCorrectAnswers: number;
+  studyPlan: StudyPlan;
+  studyPlanUpdatedAt?: string;
+}
+
+export interface Profile {
+  id: string;
+  name: string;
+  avatar: string;
+  yearGroup?: string;
+  createdAt: string;
 }
 
 export type MasteryLevel = 'not-started' | 'red' | 'amber' | 'green' | 'gold';
