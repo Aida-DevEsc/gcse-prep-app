@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { getSubjectById } from '../data/index';
 import { examInfo } from '../data/examInfo';
 import { getTopicStatus, STATUS_META } from '../utils/diagnostic';
+import { getPastPaperTopicFlags } from '../utils/pastPapers';
 import { XP_REWARDS } from '../utils/xp';
 import type { DifficultyLevel } from '../types';
 import Flashcards from './Flashcards';
@@ -29,7 +30,12 @@ export default function TopicPage() {
   const progress = state.topicProgress[topic.id];
   const mastery = progress?.masteryPercent || 0;
   const exam = examInfo[subject.id];
-  const status = getTopicStatus(topic.id, state.diagnosticResults.find(d => d.subjectId === subject.id), progress);
+  const status = getTopicStatus(
+    topic.id,
+    state.diagnosticResults.find(d => d.subjectId === subject.id),
+    progress,
+    getPastPaperTopicFlags(subject.id, state.pastPaperAttempts || [])[topic.id],
+  );
 
   const handleExplanationRead = () => {
     if (!progress?.explanationRead) {

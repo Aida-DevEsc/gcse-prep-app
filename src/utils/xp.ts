@@ -8,6 +8,7 @@ export const XP_REWARDS = {
   DAILY_CHALLENGE_CORRECT: 25,
   VIDEO_SUMMARY: 15,
   DIAGNOSTIC_COMPLETE: 50,
+  PAST_PAPER_MARKED: 75,
 } as const;
 
 export const XP_PER_LEVEL = 500;

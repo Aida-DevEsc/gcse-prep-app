@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { UserState, TopicProgress, CheckpointResult, DiagnosticResult, Badge, YouTubeVideo, StudyPlan, StudyPlanDay } from '../types';
+import type { UserState, TopicProgress, CheckpointResult, DiagnosticResult, Badge, YouTubeVideo, StudyPlan, StudyPlanDay, PastPaperAttempt } from '../types';
 import { loadState, saveState } from '../utils/storage';
 import { calculateLevel, XP_REWARDS } from '../utils/xp';
 
@@ -17,6 +17,8 @@ type Action =
   | { type: 'ANSWER_QUESTION'; correct: boolean }
   | { type: 'SET_STUDY_PLAN'; plan: StudyPlan }
   | { type: 'UPDATE_STUDY_PLAN_DAY'; day: StudyPlanDay['day']; patch: Partial<StudyPlanDay> }
+  | { type: 'ADD_PAST_PAPER_ATTEMPT'; attempt: PastPaperAttempt }
+  | { type: 'DELETE_PAST_PAPER_ATTEMPT'; id: string }
   | { type: 'RESET_STATE'; profileId: string };
 
 function reducer(state: UserState, action: Action): UserState {
@@ -156,6 +158,17 @@ function reducer(state: UserState, action: Action): UserState {
         studyPlan: state.studyPlan.map(d => (d.day === action.day ? { ...d, ...action.patch } : d)),
         studyPlanUpdatedAt: new Date().toISOString(),
       };
+    case 'ADD_PAST_PAPER_ATTEMPT': {
+      const newXp = state.xp + XP_REWARDS.PAST_PAPER_MARKED;
+      return {
+        ...state,
+        xp: newXp,
+        level: calculateLevel(newXp),
+        pastPaperAttempts: [...state.pastPaperAttempts, action.attempt],
+      };
+    }
+    case 'DELETE_PAST_PAPER_ATTEMPT':
+      return { ...state, pastPaperAttempts: state.pastPaperAttempts.filter(a => a.id !== action.id) };
     case 'RESET_STATE':
       return loadState(action.profileId);
     default:

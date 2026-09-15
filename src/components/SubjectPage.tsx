@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getSubjectById } from '../data/index';
 import { getMasteryLevel, getMasteryColor } from '../types';
 import { examInfo } from '../data/examInfo';
 import { getDiagnosticSections, getSubjectStatuses, countStatuses, STATUS_META } from '../utils/diagnostic';
 import SchoolResourcesCard from './SchoolResourcesCard';
+import PastPapersTab from './PastPapersTab';
+import { getQualificationsForSubject } from '../data/pastPapers';
 
 export default function SubjectPage() {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -14,6 +16,8 @@ export default function SubjectPage() {
   const subject = getSubjectById(subjectId || '');
   const [expandedUnits, setExpandedUnits] = useState<Record<string, boolean>>({});
   const [examOpen, setExamOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get('tab') === 'papers' ? 'papers' : 'topics';
 
   if (!subject) {
     return <div className="p-8 text-center text-slate-500">Subject not found.</div>;
@@ -39,6 +43,8 @@ export default function SubjectPage() {
   const counts = countStatuses(statuses);
   const priorityTopics = allTopics.filter(t => statuses[t.id] === 'priority');
   const gapTopics = allTopics.filter(t => statuses[t.id] === 'gap');
+  const paperAttempts = (state.pastPaperAttempts || []).filter(a => a.subjectId === subject.id);
+  const paperCount = getQualificationsForSubject(subject.id).reduce((n, q) => n + q.series.reduce((m, s) => m + s.papers.length, 0), 0);
 
   return (
     <div className="p-4 md:p-8 max-w-5xl mx-auto">
@@ -55,6 +61,25 @@ export default function SubjectPage() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="flex gap-1 border-b border-slate-200 mb-6">
+        {([
+          { key: 'topics', label: '📚 Topics' },
+          { key: 'papers', label: `📄 Past papers${paperCount ? ` (${paperCount})` : ''}` },
+        ] as const).map(t => (
+          <button
+            key={t.key}
+            onClick={() => setSearchParams(t.key === 'topics' ? {} : { tab: t.key }, { replace: true })}
+            className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+              tab === t.key ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'papers' ? <PastPapersTab key={subject.id} subject={subject} /> : (<>
       {/* Exam structure (from the school's own revision guide / exam board spec) */}
       {exam && (
         <div className="bg-slate-800 rounded-xl mb-6 overflow-hidden">
@@ -145,8 +170,8 @@ export default function SubjectPage() {
         </div>
       )}
 
-      {/* Priorities and gaps from the diagnostic */}
-      {diagnostic && (
+      {/* Priorities and gaps from the diagnostic and past papers */}
+      {(diagnostic || paperAttempts.length > 0) && (
         <div className="bg-white border border-slate-200 rounded-xl p-4 mb-6">
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <h3 className="font-semibold text-slate-700 mr-2">🎯 Your priorities</h3>
@@ -175,7 +200,9 @@ export default function SubjectPage() {
               })}
             </div>
           )}
-          <p className="text-[11px] text-slate-400 mt-3">A Priority or Gap turns Secure once you score 80%+ over at least 10 practice questions on that topic.</p>
+          <p className="text-[11px] text-slate-400 mt-3">
+            Priorities and Gaps come from the diagnostic{paperCount ? ' and the marks you lose in past papers' : ''}. One turns Secure once you score 80%+ over at least 10 practice questions on that topic.
+          </p>
         </div>
       )}
 
@@ -290,6 +317,7 @@ export default function SubjectPage() {
           );
         })}
       </div>
+      </>)}
     </div>
   );
 }

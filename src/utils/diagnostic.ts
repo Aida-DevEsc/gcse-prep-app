@@ -1,4 +1,6 @@
 import type { Subject, Topic, Question, DiagnosticResult, TopicProgress, TopicStatus, UserState } from '../types';
+import { getPastPaperTopicFlags, statusFromLostMarks } from './pastPapers';
+import type { PastPaperTopicFlag } from './pastPapers';
 
 /** Two questions per topic lets us tell a partial gap (1/2) from a priority (0/2). */
 export const QUESTIONS_PER_TOPIC = 2;
@@ -62,31 +64,43 @@ export function statusFromScore(correct: number, total: number): TopicStatus {
   return 'gap';
 }
 
+function practisedToSecure(progress?: TopicProgress, since?: string): boolean {
+  if (!progress || progress.questionsAttempted < 10 || progress.masteryPercent < 80) return false;
+  return !since || progress.lastAttempted > since;
+}
+
+const SEVERITY: Record<TopicStatus, number> = { untested: 0, secure: 1, gap: 2, priority: 3 };
+
 /**
- * A topic's diagnostic status, upgraded to "secure" once she has closed the gap through practice
- * (at least 10 practice questions at 80%+ mastery).
+ * A topic's status from the diagnostic and from marks lost in past papers (whichever is worse).
+ * Either kind of flag turns "secure" once she has closed the gap through practice (at least 10
+ * practice questions at 80%+ mastery) — for a past-paper flag, that practice must come after the paper.
  */
-export function getTopicStatus(topicId: string, diagnostic?: DiagnosticResult, progress?: TopicProgress): TopicStatus {
+export function getTopicStatus(topicId: string, diagnostic?: DiagnosticResult, progress?: TopicProgress, paperFlag?: PastPaperTopicFlag): TopicStatus {
   const score = diagnostic?.topicScores[topicId];
-  const base = score ? statusFromScore(score.correct, score.total) : 'untested';
-  if ((base === 'priority' || base === 'gap') && progress && progress.questionsAttempted >= 10 && progress.masteryPercent >= 80) {
-    return 'secure';
-  }
-  return base;
+  let fromDiagnostic: TopicStatus = score ? statusFromScore(score.correct, score.total) : 'untested';
+  if ((fromDiagnostic === 'priority' || fromDiagnostic === 'gap') && practisedToSecure(progress)) fromDiagnostic = 'secure';
+
+  let fromPapers = paperFlag ? statusFromLostMarks(paperFlag.lost) : undefined;
+  if (fromPapers && paperFlag && practisedToSecure(progress, paperFlag.date)) fromPapers = 'secure';
+
+  if (!fromPapers) return fromDiagnostic;
+  return SEVERITY[fromPapers] > SEVERITY[fromDiagnostic] ? fromPapers : fromDiagnostic;
 }
 
 export const STATUS_META: Record<TopicStatus, { label: string; icon: string; className: string; hint: string }> = {
-  priority: { label: 'Priority', icon: '🔴', className: 'bg-red-100 text-red-700 border-red-300', hint: 'Missed both diagnostic questions — revise this first' },
-  gap: { label: 'Gap', icon: '🟠', className: 'bg-amber-100 text-amber-800 border-amber-300', hint: 'Missed one diagnostic question — partly secure' },
+  priority: { label: 'Priority', icon: '🔴', className: 'bg-red-100 text-red-700 border-red-300', hint: 'Missed both diagnostic questions, or lost 4+ marks in past papers — revise this first' },
+  gap: { label: 'Gap', icon: '🟠', className: 'bg-amber-100 text-amber-800 border-amber-300', hint: 'Missed one diagnostic question, or lost a few marks in a past paper — partly secure' },
   secure: { label: 'Secure', icon: '🟢', className: 'bg-emerald-100 text-emerald-700 border-emerald-300', hint: 'Answered grade 7–9 questions correctly' },
   untested: { label: 'Not tested', icon: '⚪', className: 'bg-slate-100 text-slate-500 border-slate-200', hint: 'Take the diagnostic to find out' },
 };
 
 export function getSubjectStatuses(subject: Subject, state: UserState): Record<string, TopicStatus> {
   const diagnostic = state.diagnosticResults.find(d => d.subjectId === subject.id);
+  const paperFlags = getPastPaperTopicFlags(subject.id, state.pastPaperAttempts || []);
   const out: Record<string, TopicStatus> = {};
   for (const topic of subject.units.flatMap(u => u.topics)) {
-    out[topic.id] = getTopicStatus(topic.id, diagnostic, state.topicProgress[topic.id]);
+    out[topic.id] = getTopicStatus(topic.id, diagnostic, state.topicProgress[topic.id], paperFlags[topic.id]);
   }
   return out;
 }

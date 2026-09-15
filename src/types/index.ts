@@ -131,6 +131,21 @@ export const MIN_DAILY_MINUTES = 60;
 
 export type StudyPlan = StudyPlanDay[];
 
+/** One self-marked sitting of a real past paper, marked against the board's mark scheme. */
+export interface PastPaperAttempt {
+  id: string;
+  subjectId: string;
+  qualificationId: string;
+  seriesId: string;
+  paperId: string;
+  date: string;
+  marks: number;
+  maxMarks: number;
+  /** Marks lost on each topic, tagged by the student while marking. */
+  lostByTopic: Record<string, number>;
+  minutesTaken?: number;
+}
+
 export interface UserState {
   xp: number;
   level: number;
@@ -147,6 +162,7 @@ export interface UserState {
   totalCorrectAnswers: number;
   studyPlan: StudyPlan;
   studyPlanUpdatedAt?: string;
+  pastPaperAttempts: PastPaperAttempt[];
 }
 
 export interface Profile {

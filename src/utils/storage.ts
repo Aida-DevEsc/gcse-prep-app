@@ -33,6 +33,7 @@ export function getDefaultState(): UserState {
     totalQuestionsAnswered: 0,
     totalCorrectAnswers: 0,
     studyPlan: getDefaultStudyPlan(),
+    pastPaperAttempts: [],
   };
 }
 
