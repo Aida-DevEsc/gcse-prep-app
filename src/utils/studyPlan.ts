@@ -1,48 +1,69 @@
-import type { Subject, UserState, StudyPlan, StudyPlanDay, WeekDay } from '../types';
+import type { Subject, UserState, StudyPlan, StudyPlanDay, StudySession, WeekDay } from '../types';
+import { MIN_DAILY_MINUTES } from '../types';
+import { getSubjectStatuses } from './diagnostic';
 
 const WEEKDAYS: WeekDay[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-function subjectAverageMastery(subject: Subject, state: UserState): number {
-  const topics = subject.units.flatMap(u => u.topics);
-  if (topics.length === 0) return 0;
-  const total = topics.reduce((sum, t) => sum + (state.topicProgress[t.id]?.masteryPercent || 0), 0);
-  return total / topics.length;
+export function newSessionId(): string {
+  return `s-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
-function subjectHasUnfinishedSummerTopics(subject: Subject, state: UserState): boolean {
-  return subject.units.some(u =>
-    u.topics.some(t => t.summerTerm && (state.topicProgress[t.id]?.masteryPercent || 0) < 70)
-  );
+export function dayTotal(day: StudyPlanDay): number {
+  return day.sessions.reduce((sum, s) => sum + (s.minutes || 0), 0);
+}
+
+export function isDayBelowMinimum(day: StudyPlanDay): boolean {
+  return dayTotal(day) < MIN_DAILY_MINUTES;
+}
+
+function averageMastery(subject: Subject, state: UserState): number {
+  const topics = subject.units.flatMap(u => u.topics);
+  if (topics.length === 0) return 0;
+  return topics.reduce((sum, t) => sum + (state.topicProgress[t.id]?.masteryPercent || 0), 0) / topics.length;
 }
 
 /**
- * Builds a suggested weekly study plan: weaker subjects (lower average mastery, or with
- * unfinished Summer Term focus topics) are prioritised for weekday slots. Saturday is
- * reserved for the single weakest subject as extra revision; Sunday is a rest day.
+ * Builds a weekly plan with at least an hour of study every day, split across two subjects.
+ * Subjects with more diagnostic Priority/Gap topics (then lower mastery) get more sessions,
+ * and each session is pointed at that subject's next Priority or Gap topic where there is one.
  */
 export function generateStudyPlan(subjects: Subject[], state: UserState): StudyPlan {
-  const ranked = [...subjects].sort((a, b) => {
-    const aSummer = subjectHasUnfinishedSummerTopics(a, state) ? 1 : 0;
-    const bSummer = subjectHasUnfinishedSummerTopics(b, state) ? 1 : 0;
-    if (aSummer !== bSummer) return bSummer - aSummer; // summer-focus subjects first
-    return subjectAverageMastery(a, state) - subjectAverageMastery(b, state); // weakest first
+  const info = subjects.map(subject => {
+    const statuses = getSubjectStatuses(subject, state);
+    const topics = subject.units.flatMap(u => u.topics);
+    const priority = topics.filter(t => statuses[t.id] === 'priority').map(t => t.id);
+    const gap = topics.filter(t => statuses[t.id] === 'gap').map(t => t.id);
+    const diagnosed = state.diagnosticResults.some(d => d.subjectId === subject.id);
+    // Undiagnosed subjects get a middling weight so they still appear (their first session is the diagnostic).
+    const weight = diagnosed ? priority.length * 3 + gap.length : 6;
+    return { subject, focusQueue: [...priority, ...gap], weight, mastery: averageMastery(subject, state) };
   });
 
-  const weekdaySubjects = ranked.slice(0, 5);
-  // Ensure exactly 5 weekday slots even if there are fewer than 5 subjects (cycle through).
-  while (weekdaySubjects.length < 5 && ranked.length > 0) {
-    weekdaySubjects.push(ranked[weekdaySubjects.length % ranked.length]);
+  const ranked = [...info].sort((a, b) => b.weight - a.weight || a.mastery - b.mastery);
+
+  // 7 days x 2 subjects = 14 sessions; walk the ranked list round-robin so the weakest subjects get extra sessions.
+  const sessionsPerDay = 2;
+  const slots: typeof ranked = [];
+  while (slots.length < WEEKDAYS.length * sessionsPerDay && ranked.length > 0) {
+    slots.push(ranked[slots.length % ranked.length]);
   }
 
-  const weakest = ranked[0];
+  const queues = new Map(info.map(i => [i.subject.id, [...i.focusQueue]]));
 
-  const plan: StudyPlan = WEEKDAYS.map((day, i): StudyPlanDay => {
-    if (day === 'Sun') return { day, subjectId: null, minutes: 0 };
-    if (day === 'Sat') return { day, subjectId: weakest ? weakest.id : null, minutes: 45 };
-    return { day, subjectId: weekdaySubjects[i] ? weekdaySubjects[i].id : null, minutes: 30 };
+  return WEEKDAYS.map((day, dayIndex): StudyPlanDay => {
+    const weekend = day === 'Sat' || day === 'Sun';
+    const minutes = weekend ? 45 : 30; // weekdays 60 min total, weekends 90 min
+    const daySlots = slots.slice(dayIndex * sessionsPerDay, dayIndex * sessionsPerDay + sessionsPerDay);
+    // Avoid the same subject twice in one day when the list is short.
+    const unique = daySlots.filter((s, i) => daySlots.findIndex(x => x.subject.id === s.subject.id) === i);
+    const sessions: StudySession[] = unique.map(slot => ({
+      id: newSessionId(),
+      subjectId: slot.subject.id,
+      topicId: queues.get(slot.subject.id)?.shift() ?? null,
+      minutes: unique.length === 1 ? Math.max(MIN_DAILY_MINUTES, minutes * 2) : minutes,
+    }));
+    return { day, sessions };
   });
-
-  return plan;
 }
 
 export function dayLabel(day: WeekDay): string {
@@ -53,7 +74,6 @@ export function dayLabel(day: WeekDay): string {
 }
 
 export function todayWeekDay(): WeekDay {
-  const idx = new Date().getDay(); // 0=Sun..6=Sat
   const order: WeekDay[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  return order[idx];
+  return order[new Date().getDay()];
 }

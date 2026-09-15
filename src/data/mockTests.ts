@@ -1459,9 +1459,9 @@ const historyQuestions: Question[] = [
 const historyMock: MockTest = {
   id: 'mock-history',
   subjectId: 'history',
-  title: 'AQA GCSE History Mock Exam',
+  title: 'Eduqas GCSE History Mock Exam',
   paper: 'Paper 1',
-  examBoard: 'AQA',
+  examBoard: 'WJEC Eduqas',
   duration: 75,
   totalMarks: 52,
   instructions: [
@@ -1796,7 +1796,43 @@ const englishMock: MockTest = {
 // EXPORTS
 // ============================================================
 
-export const mockTests: MockTest[] = [mathsMock, biologyMock, chemistryMock, physicsMock, historyMock, englishMock];
+// Computer Science and Spanish mocks draw their questions from the subject's topic bank
+// (the MockTest component pools topic questions with any dedicated mock questions).
+const computerScienceMock: MockTest = {
+  id: 'mock-computerscience',
+  subjectId: 'computerscience',
+  title: 'OCR GCSE Computer Science Mock Exam',
+  paper: 'Papers 1 & 2 (J277/01 and J277/02)',
+  examBoard: 'OCR',
+  duration: 90,
+  totalMarks: 80,
+  instructions: [
+    'Answer all questions.',
+    'Questions cover both Computer Systems (Paper 1) and Computational Thinking, Algorithms and Programming (Paper 2).',
+    'Read code and pseudocode carefully — trace it line by line before choosing an answer.',
+    'Use correct technical vocabulary in your reasoning.',
+  ],
+  questions: [],
+};
+
+const spanishMock: MockTest = {
+  id: 'mock-spanish',
+  subjectId: 'spanish',
+  title: 'AQA GCSE Spanish Mock Exam',
+  paper: 'Reading and grammar (Higher)',
+  examBoard: 'AQA',
+  duration: 60,
+  totalMarks: 50,
+  instructions: [
+    'Answer all questions.',
+    'Questions cover all three themes plus grammar and translation.',
+    'Look for tense markers (ayer, mañana, cuando era pequeño) to work out the time frame.',
+    'Watch for negatives and distractors — the first word you recognise is not always the answer.',
+  ],
+  questions: [],
+};
+
+export const mockTests: MockTest[] = [mathsMock, biologyMock, chemistryMock, physicsMock, historyMock, englishMock, computerScienceMock, spanishMock];
 
 export function getMockTestBySubject(subjectId: string): MockTest | undefined {
   return mockTests.find(m => m.subjectId === subjectId);

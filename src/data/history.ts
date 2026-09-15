@@ -11,8 +11,8 @@ export const historySubject: Subject = {
   name: 'History',
   icon: '📜',
   color: '#8b5cf6',
-  examBoard: 'Edexcel',
-  specification: 'GCSE History (1HI0)',
+  examBoard: 'WJEC Eduqas',
+  specification: 'GCSE (9–1) History',
   units: [
     {
       id: 'hist-medicine', subjectId: 'history', name: 'Medicine Through Time c.1250–present',

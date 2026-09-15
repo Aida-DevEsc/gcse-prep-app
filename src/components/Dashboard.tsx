@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getDailyChallenge } from '../data/dailyChallenges';
 import { getDailyOlympiad } from '../data/olympiadPuzzles';
 import type { OlympiadPuzzle } from '../data/olympiadPuzzles';
 import { getAllSubjects } from '../data/index';
-import { generateStudyPlan, dayLabel, todayWeekDay } from '../utils/studyPlan';
-import type { WeekDay } from '../types';
+import { getSubjectStatuses, countStatuses } from '../utils/diagnostic';
+import StudyPlanCard from './StudyPlanCard';
 
 export default function Dashboard() {
   const { state, dispatch } = useApp();
@@ -16,30 +16,6 @@ export default function Dashboard() {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(todayChallenge?.answered || false);
   const subjects = getAllSubjects();
-  const [editingPlan, setEditingPlan] = useState(false);
-  const currentDay = todayWeekDay();
-
-  const handleRegeneratePlan = () => {
-    dispatch({ type: 'SET_STUDY_PLAN', plan: generateStudyPlan(subjects, state) });
-  };
-
-  const handlePlanDayChange = (day: WeekDay, subjectId: string) => {
-    dispatch({ type: 'UPDATE_STUDY_PLAN_DAY', day, patch: { subjectId: subjectId || null } });
-  };
-
-  const handlePlanMinutesChange = (day: WeekDay, minutes: number) => {
-    dispatch({ type: 'UPDATE_STUDY_PLAN_DAY', day, patch: { minutes } });
-  };
-
-  // Seed a suggested plan the first time a profile has no plan assigned yet.
-  useEffect(() => {
-    const isUnset = state.studyPlan.every(d => d.subjectId === null);
-    if (isUnset) {
-      dispatch({ type: 'SET_STUDY_PLAN', plan: generateStudyPlan(subjects, state) });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Olympiad puzzles
   const olympiad = getDailyOlympiad(today);
   const mathsOlympiadKey = `olympiad-maths-${today}`;
@@ -94,81 +70,7 @@ export default function Dashboard() {
         <p className="text-slate-500 mt-1">Keep pushing for those top grades. Every question counts.</p>
       </div>
 
-      {/* Daily Study Plan */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 md:p-5 mb-6 md:mb-8">
-        <div className="flex items-center gap-2 mb-3 flex-wrap">
-          <span className="text-xl">📅</span>
-          <h2 className="text-lg font-bold text-slate-800">Your Study Plan</h2>
-          <div className="ml-auto flex gap-2">
-            <button
-              onClick={handleRegeneratePlan}
-              className="text-xs px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg font-medium hover:bg-slate-200"
-              title="Rebuild a suggested plan from your weakest subjects (overwrites your edits)"
-            >
-              🔄 Suggest plan
-            </button>
-            <button
-              onClick={() => setEditingPlan(e => !e)}
-              className={`text-xs px-3 py-1.5 rounded-lg font-medium ${
-                editingPlan ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
-              }`}
-            >
-              {editingPlan ? '✓ Done editing' : '✏️ Edit plan'}
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2">
-          {state.studyPlan.map(entry => {
-            const subject = subjects.find(s => s.id === entry.subjectId);
-            const isToday = entry.day === currentDay;
-            return (
-              <div
-                key={entry.day}
-                className={`rounded-lg p-2.5 border ${
-                  isToday ? 'border-indigo-400 bg-indigo-50' : 'border-slate-200 bg-slate-50'
-                }`}
-              >
-                <p className={`text-[10px] font-semibold uppercase tracking-wide mb-1 ${isToday ? 'text-indigo-600' : 'text-slate-400'}`}>
-                  {dayLabel(entry.day)} {isToday && '• Today'}
-                </p>
-
-                {editingPlan ? (
-                  <div className="space-y-1.5">
-                    <select
-                      value={entry.subjectId || ''}
-                      onChange={e => handlePlanDayChange(entry.day, e.target.value)}
-                      className="w-full text-xs border border-slate-300 rounded px-1.5 py-1 bg-white"
-                    >
-                      <option value="">Rest day</option>
-                      {subjects.map(s => (
-                        <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
-                      ))}
-                    </select>
-                    <input
-                      type="number"
-                      min={0}
-                      step={5}
-                      value={entry.minutes}
-                      onChange={e => handlePlanMinutesChange(entry.day, Math.max(0, Number(e.target.value) || 0))}
-                      className="w-full text-xs border border-slate-300 rounded px-1.5 py-1"
-                    />
-                  </div>
-                ) : subject ? (
-                  entry.subjectId ? (
-                    <Link to={`/subject/${subject.id}`} className="no-underline block">
-                      <p className="text-sm font-semibold text-slate-700">{subject.icon} {subject.name}</p>
-                      <p className="text-[11px] text-slate-400">{entry.minutes} min</p>
-                    </Link>
-                  ) : null
-                ) : (
-                  <p className="text-sm text-slate-400 italic">Rest day</p>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <StudyPlanCard />
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
@@ -250,8 +152,8 @@ export default function Dashboard() {
         <div className="space-y-4">
           <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
             <h3 className="font-semibold text-slate-700 mb-3">📊 Diagnostics</h3>
-            <p className="text-sm text-slate-500 mb-3">{diagnosticsDone}/6 subjects tested</p>
-            {diagnosticsDone < 6 && (
+            <p className="text-sm text-slate-500 mb-3">{diagnosticsDone}/{subjects.length} subjects tested</p>
+            {diagnosticsDone < subjects.length && (
               <p className="text-xs text-indigo-600">Take a diagnostic test to find your weak spots!</p>
             )}
           </div>
@@ -396,9 +298,15 @@ export default function Dashboard() {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs text-slate-500">{progress}% mastered</span>
-                {diagnostic ? (
-                  <span className="text-xs text-emerald-600">Diagnostic: {diagnostic.score}%</span>
-                ) : (
+                {diagnostic ? (() => {
+                  const c = countStatuses(getSubjectStatuses(subject, state));
+                  return (
+                    <span className="text-xs text-slate-500">
+                      <span className="text-red-600">🔴 {c.priority}</span> · <span className="text-amber-600">🟠 {c.gap}</span>
+                      {c.untested > 0 && <span className="text-slate-400"> · {c.untested} untested</span>}
+                    </span>
+                  );
+                })() : (
                   <span className="text-xs text-amber-600">Take diagnostic →</span>
                 )}
               </div>

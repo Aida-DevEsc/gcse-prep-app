@@ -31,7 +31,6 @@ export interface Topic {
   flashcards: Flashcard[];
   videos: YouTubeVideo[];
   questions: Question[];
-  summerTerm?: boolean;
 }
 
 export interface Unit {
@@ -39,6 +38,8 @@ export interface Unit {
   subjectId: string;
   name: string;
   topics: Topic[];
+  /** Exam paper/component this unit is examined in (e.g. "Paper 1"). Used to group the diagnostic. */
+  examSection?: string;
 }
 
 export interface Subject {
@@ -87,7 +88,12 @@ export interface DiagnosticResult {
   topicScores: Record<string, { correct: number; total: number }>;
   weakTopics: string[];
   strongTopics: string[];
+  /** Diagnostic sections (exam papers) completed so far. */
+  sectionsCompleted?: string[];
 }
+
+/** Outcome of the subject diagnostic for one topic. */
+export type TopicStatus = 'priority' | 'gap' | 'secure' | 'untested';
 
 export interface Badge {
   id: string;
@@ -107,14 +113,21 @@ export interface DailyChallenge {
 
 export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
 
-export interface StudyPlanDay {
-  day: WeekDay;
-  /** null = rest day */
-  subjectId: string | null;
-  /** Optional: focus on one specific topic that day instead of general subject revision */
+export interface StudySession {
+  id: string;
+  subjectId: string;
+  /** Optional: focus on one specific topic instead of general subject revision */
   topicId?: string | null;
   minutes: number;
 }
+
+export interface StudyPlanDay {
+  day: WeekDay;
+  sessions: StudySession[];
+}
+
+/** Minimum total study time per day, per the school's "at least one hour every day" guidance. */
+export const MIN_DAILY_MINUTES = 60;
 
 export type StudyPlan = StudyPlanDay[];
 

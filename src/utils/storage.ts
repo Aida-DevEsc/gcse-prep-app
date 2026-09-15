@@ -8,15 +8,13 @@ const ACTIVE_PROFILE_KEY = 'aceprep-active-profile';
 const stateKeyFor = (profileId: string) => `aceprep-gcse-state-${profileId}`;
 
 export function getDefaultStudyPlan(): StudyPlan {
-  return [
-    { day: 'Mon', subjectId: null, minutes: 30 },
-    { day: 'Tue', subjectId: null, minutes: 30 },
-    { day: 'Wed', subjectId: null, minutes: 30 },
-    { day: 'Thu', subjectId: null, minutes: 30 },
-    { day: 'Fri', subjectId: null, minutes: 30 },
-    { day: 'Sat', subjectId: null, minutes: 45 },
-    { day: 'Sun', subjectId: null, minutes: 0 },
-  ];
+  const days: StudyPlan[number]['day'][] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  return days.map(day => ({ day, sessions: [] }));
+}
+
+/** Plans saved before multi-subject days existed have no `sessions` array; those get rebuilt. */
+function isCurrentPlanShape(plan: unknown): plan is StudyPlan {
+  return Array.isArray(plan) && plan.length === 7 && plan.every(d => d && Array.isArray((d as { sessions?: unknown }).sessions));
 }
 
 export function getDefaultState(): UserState {
@@ -45,7 +43,18 @@ export function loadState(profileId: string): UserState {
     const saved = localStorage.getItem(stateKeyFor(profileId));
     if (saved) {
       const parsed = JSON.parse(saved);
-      return { ...getDefaultState(), ...parsed, studyPlan: parsed.studyPlan?.length ? parsed.studyPlan : getDefaultStudyPlan() };
+      // Keep earned flags from saved badges but refresh names/descriptions from the current definitions.
+      const savedBadges: { id: string; earned?: boolean; earnedDate?: string }[] = Array.isArray(parsed.badges) ? parsed.badges : [];
+      const badges = getDefaultBadges().map(def => {
+        const saved = savedBadges.find(b => b.id === def.id);
+        return saved ? { ...def, earned: !!saved.earned, earnedDate: saved.earnedDate } : def;
+      });
+      return {
+        ...getDefaultState(),
+        ...parsed,
+        badges,
+        studyPlan: isCurrentPlanShape(parsed.studyPlan) ? parsed.studyPlan : getDefaultStudyPlan(),
+      };
     }
   } catch { /* ignore */ }
   return getDefaultState();
@@ -182,7 +191,7 @@ function getDefaultBadges() {
     { id: 'perfect-quiz', name: 'Perfect Score', description: 'Get 100% on any quiz', icon: '💯', earned: false },
     { id: 'flashcard-fan', name: 'Flashcard Fan', description: 'Review 100 flashcards', icon: '📇', earned: false },
     { id: 'video-scholar', name: 'Video Scholar', description: 'Write 10 video summaries', icon: '🎬', earned: false },
-    { id: 'all-diagnostics', name: 'Fully Diagnosed', description: 'Complete all 6 diagnostic tests', icon: '🩺', earned: false },
+    { id: 'all-diagnostics', name: 'Fully Diagnosed', description: 'Complete every subject diagnostic', icon: '🩺', earned: false },
     { id: 'level-10', name: 'Level 10', description: 'Reach level 10', icon: '🎖️', earned: false },
     { id: 'level-25', name: 'Level 25', description: 'Reach level 25', icon: '🏅', earned: false },
   ];

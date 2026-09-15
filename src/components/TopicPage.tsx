@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { getSubjectById } from '../data/index';
 import { examInfo } from '../data/examInfo';
+import { getTopicStatus, STATUS_META } from '../utils/diagnostic';
 import { XP_REWARDS } from '../utils/xp';
 import type { DifficultyLevel } from '../types';
 import Flashcards from './Flashcards';
@@ -27,6 +28,7 @@ export default function TopicPage() {
   const progress = state.topicProgress[topic.id];
   const mastery = progress?.masteryPercent || 0;
   const exam = examInfo[subject.id];
+  const status = getTopicStatus(topic.id, state.diagnosticResults.find(d => d.subjectId === subject.id), progress);
 
   const handleExplanationRead = () => {
     if (!progress?.explanationRead) {
@@ -69,13 +71,16 @@ export default function TopicPage() {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h1 className="text-2xl font-bold text-slate-800">{topic.name}</h1>
-            {topic.summerTerm && (
+            {status !== 'untested' && (
               <span
-                title="Year 9 Summer Term curriculum focus"
-                className="text-xs px-2 py-1 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full font-semibold border border-amber-300 inline-flex items-center gap-1"
+                title={STATUS_META[status].hint}
+                className={`text-xs px-2 py-1 rounded-full font-semibold border ${STATUS_META[status].className}`}
               >
-                <span>☀️</span> Summer Term Focus
+                {STATUS_META[status].icon} {STATUS_META[status].label}
               </span>
+            )}
+            {unit?.examSection && (
+              <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200">{unit.examSection}</span>
             )}
           </div>
           <p className="text-sm text-slate-500 mt-1">{topic.description}</p>

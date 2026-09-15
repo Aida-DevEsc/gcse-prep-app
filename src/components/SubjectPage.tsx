@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { getSubjectById } from '../data/index';
 import { getMasteryLevel, getMasteryColor } from '../types';
 import { examInfo } from '../data/examInfo';
+import { getDiagnosticSections, getSubjectStatuses, countStatuses, STATUS_META } from '../utils/diagnostic';
 
 export default function SubjectPage() {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -11,6 +12,7 @@ export default function SubjectPage() {
   const navigate = useNavigate();
   const subject = getSubjectById(subjectId || '');
   const [expandedUnits, setExpandedUnits] = useState<Record<string, boolean>>({});
+  const [examOpen, setExamOpen] = useState(false);
 
   if (!subject) {
     return <div className="p-8 text-center text-slate-500">Subject not found.</div>;
@@ -30,7 +32,12 @@ export default function SubjectPage() {
 
   const checkpointsForSubject = state.checkpointResults.filter(c => c.subjectId === subject.id);
   const exam = examInfo[subject.id];
-  const [examOpen, setExamOpen] = useState(false);
+  const sections = getDiagnosticSections(subject);
+  const sectionsDone = sections.filter(s => diagnostic?.sectionsCompleted?.includes(s.key)).length;
+  const statuses = getSubjectStatuses(subject, state);
+  const counts = countStatuses(statuses);
+  const priorityTopics = allTopics.filter(t => statuses[t.id] === 'priority');
+  const gapTopics = allTopics.filter(t => statuses[t.id] === 'gap');
 
   return (
     <div className="p-4 md:p-8 max-w-5xl mx-auto">
@@ -65,7 +72,7 @@ export default function SubjectPage() {
                 <div key={p.name} className="bg-slate-700/50 rounded-lg p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                     <span className="text-sm font-semibold text-white">{p.name}</span>
-                    <span className="text-xs text-slate-300">{p.marks} marks • {p.weighting} • {p.duration}</span>
+                    <span className="text-xs text-slate-300">{p.marks ? `${p.marks} marks • ` : ''}{p.weighting} • {p.duration}</span>
                   </div>
                   <p className="text-xs text-slate-300">{p.topicsCovered}</p>
                 </div>
@@ -90,7 +97,7 @@ export default function SubjectPage() {
           onClick={() => navigate(`/subject/${subject.id}/diagnostic`)}
           className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors"
         >
-          {diagnostic ? '🔄 Retake Diagnostic' : '🩺 Take Diagnostic Test'}
+          🩺 {diagnostic ? 'Diagnostic' : 'Take Diagnostic'}
         </button>
         <button
           onClick={() => navigate(`/subject/${subject.id}/checkpoint`)}
@@ -102,7 +109,7 @@ export default function SubjectPage() {
           onClick={() => navigate(`/subject/${subject.id}/mock-test`)}
           className="px-5 py-2.5 bg-slate-800 text-white rounded-lg text-sm font-semibold hover:bg-slate-900 transition-colors"
         >
-          📝 AQA Mock Exam
+          📝 {subject.examBoard} Mock Exam
         </button>
         {diagnostic && (
           <div className="ml-auto bg-white rounded-lg border border-slate-200 px-4 py-2">
@@ -112,55 +119,59 @@ export default function SubjectPage() {
         )}
       </div>
 
-      {/* Summer Term Focus topics */}
-      {allTopics.some(t => t.summerTerm) && (
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-xl">☀️</span>
-            <h3 className="font-semibold text-amber-800">Summer Term Focus</h3>
-            <span className="text-xs px-2 py-0.5 bg-amber-200 text-amber-800 rounded-full font-medium">Year 9</span>
+      {/* Start here: diagnostic prompt until every paper has been diagnosed */}
+      {sectionsDone < sections.length && (
+        <div className="bg-indigo-600 text-white rounded-xl p-5 mb-6 flex flex-wrap items-center gap-4">
+          <div className="flex-1 min-w-[220px]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-indigo-200">
+              {sectionsDone === 0 ? 'Start here' : `${sectionsDone} of ${sections.length} papers diagnosed`}
+            </p>
+            <h3 className="text-lg font-bold">Take the grade 7–9 diagnostic</h3>
+            <p className="text-sm text-indigo-100">
+              Two harder questions on every topic, paper by paper. Topics you miss are marked
+              <strong> Priority</strong> or <strong>Gap</strong> and go straight into your study plan.
+            </p>
           </div>
-          <p className="text-xs text-amber-700 mb-3">Topics being taught this term — extra explanations, more practice questions, and renewing question sets.</p>
-          <div className="flex flex-wrap gap-2">
-            {allTopics.filter(t => t.summerTerm).map(topic => {
-              const prog = state.topicProgress[topic.id];
-              const m = prog?.masteryPercent || 0;
-              return (
-                <Link
-                  key={topic.id}
-                  to={`/subject/${subject.id}/topic/${topic.id}`}
-                  className="px-3 py-1.5 bg-white border border-amber-300 text-amber-800 rounded-full text-xs font-medium hover:bg-amber-100 transition-colors no-underline inline-flex items-center gap-1.5"
-                >
-                  <span>☀️</span>
-                  {topic.name}
-                  <span className="text-amber-500">·</span>
-                  <span className="text-amber-600">{m}%</span>
-                  <span>→</span>
-                </Link>
-              );
-            })}
-          </div>
+          <button
+            onClick={() => navigate(`/subject/${subject.id}/diagnostic`)}
+            className="px-5 py-2.5 bg-white text-indigo-700 rounded-lg text-sm font-bold hover:bg-indigo-50"
+          >
+            {sectionsDone === 0 ? 'Start diagnostic →' : 'Continue →'}
+          </button>
         </div>
       )}
 
-      {/* Weak topics from diagnostic */}
-      {diagnostic && diagnostic.weakTopics.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
-          <h3 className="font-semibold text-amber-800 mb-2">⚠️ Focus Areas (from diagnostic)</h3>
-          <div className="flex flex-wrap gap-2">
-            {diagnostic.weakTopics.map(topicId => {
-              const topic = allTopics.find(t => t.id === topicId);
-              return topic ? (
-                <Link
-                  key={topicId}
-                  to={`/subject/${subject.id}/topic/${topicId}`}
-                  className="px-3 py-1.5 bg-amber-100 text-amber-800 rounded-full text-xs font-medium hover:bg-amber-200 transition-colors no-underline"
-                >
-                  {topic.name} →
-                </Link>
-              ) : null;
-            })}
+      {/* Priorities and gaps from the diagnostic */}
+      {diagnostic && (
+        <div className="bg-white border border-slate-200 rounded-xl p-4 mb-6">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <h3 className="font-semibold text-slate-700 mr-2">🎯 Your priorities</h3>
+            {(['priority', 'gap', 'secure', 'untested'] as const).map(s => (
+              <span key={s} className={`text-xs px-2 py-0.5 rounded-full border ${STATUS_META[s].className}`}>
+                {STATUS_META[s].icon} {counts[s]} {STATUS_META[s].label}
+              </span>
+            ))}
           </div>
+          {priorityTopics.length + gapTopics.length === 0 ? (
+            <p className="text-sm text-emerald-700">No gaps in the papers diagnosed so far — great work.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {[...priorityTopics, ...gapTopics].map(topic => {
+                const st = statuses[topic.id];
+                return (
+                  <Link
+                    key={topic.id}
+                    to={`/subject/${subject.id}/topic/${topic.id}`}
+                    title={STATUS_META[st].hint}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border no-underline hover:opacity-80 ${STATUS_META[st].className}`}
+                  >
+                    {STATUS_META[st].icon} {topic.name} →
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+          <p className="text-[11px] text-slate-400 mt-3">A Priority or Gap turns Secure once you score 80%+ over at least 10 practice questions on that topic.</p>
         </div>
       )}
 
@@ -202,6 +213,9 @@ export default function SubjectPage() {
                 <div className="flex items-center gap-3">
                   <span className="text-lg">{isExpanded ? '▼' : '▶'}</span>
                   <div>
+                    {unit.examSection && (
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-indigo-500">{unit.examSection}</p>
+                    )}
                     <h3 className="font-semibold text-slate-700">{unit.name}</h3>
                     <p className="text-xs text-slate-400">{unitTopics.length} topics • {unitMastered} mastered</p>
                   </div>
@@ -242,12 +256,12 @@ export default function SubjectPage() {
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-slate-700 group-hover:text-indigo-600 transition-colors flex items-center gap-1.5">
                             {topic.name}
-                            {topic.summerTerm && (
+                            {statuses[topic.id] !== 'untested' && (
                               <span
-                                title="Summer Term curriculum focus"
-                                className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-full font-semibold border border-amber-300"
+                                title={STATUS_META[statuses[topic.id]].hint}
+                                className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold border ${STATUS_META[statuses[topic.id]].className}`}
                               >
-                                ☀️ Summer
+                                {STATUS_META[statuses[topic.id]].icon} {STATUS_META[statuses[topic.id]].label}
                               </span>
                             )}
                           </h4>

@@ -65,8 +65,25 @@ function reducer(state: UserState, action: Action): UserState {
     case 'ADD_CHECKPOINT_RESULT':
       return { ...state, checkpointResults: [...state.checkpointResults, action.result] };
     case 'ADD_DIAGNOSTIC_RESULT': {
-      const filtered = state.diagnosticResults.filter(r => r.subjectId !== action.result.subjectId);
-      return { ...state, diagnosticResults: [...filtered, action.result] };
+      // Diagnostics can be taken one exam paper at a time, so merge each new section's topic
+      // scores into the subject's existing record (a retaken topic replaces its old score).
+      const existing = state.diagnosticResults.find(r => r.subjectId === action.result.subjectId);
+      const others = state.diagnosticResults.filter(r => r.subjectId !== action.result.subjectId);
+      const topicScores = { ...(existing?.topicScores || {}), ...action.result.topicScores };
+      const entries = Object.entries(topicScores);
+      const correct = entries.reduce((sum, [, s]) => sum + s.correct, 0);
+      const total = entries.reduce((sum, [, s]) => sum + s.total, 0);
+      const merged: DiagnosticResult = {
+        subjectId: action.result.subjectId,
+        date: action.result.date,
+        score: total > 0 ? Math.round((correct / total) * 100) : 0,
+        totalQuestions: total,
+        topicScores,
+        weakTopics: entries.filter(([, s]) => s.correct / s.total < 1).map(([id]) => id),
+        strongTopics: entries.filter(([, s]) => s.correct === s.total).map(([id]) => id),
+        sectionsCompleted: Array.from(new Set([...(existing?.sectionsCompleted || []), ...(action.result.sectionsCompleted || [])])),
+      };
+      return { ...state, diagnosticResults: [...others, merged] };
     }
     case 'EARN_BADGE':
       return {
