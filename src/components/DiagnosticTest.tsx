@@ -106,7 +106,7 @@ export default function DiagnosticTest() {
                 </span>
               ))}
             </div>
-            <p className="text-xs text-slate-400">You can do it one paper at a time. Retaking a paper replaces that paper's results.</p>
+            <p className="text-xs text-slate-400">Do one section at a time or all at once. Retaking a section replaces that section's results.</p>
           </div>
 
           <div className="space-y-3 mb-6">

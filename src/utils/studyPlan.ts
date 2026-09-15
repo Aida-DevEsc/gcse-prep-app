@@ -33,9 +33,11 @@ export function generateStudyPlan(subjects: Subject[], state: UserState): StudyP
     const topics = subject.units.flatMap(u => u.topics);
     const priority = topics.filter(t => statuses[t.id] === 'priority').map(t => t.id);
     const gap = topics.filter(t => statuses[t.id] === 'gap').map(t => t.id);
+    const untested = topics.filter(t => statuses[t.id] === 'untested').length;
     const diagnosed = state.diagnosticResults.some(d => d.subjectId === subject.id);
-    // Undiagnosed subjects get a middling weight so they still appear (their first session is the diagnostic).
-    const weight = diagnosed ? priority.length * 3 + gap.length : 6;
+    // Undiagnosed subjects get a middling weight so they still appear (their first session is the diagnostic);
+    // partly diagnosed subjects keep some of that weight until every section is done.
+    const weight = diagnosed ? priority.length * 3 + gap.length + (untested > 0 ? 3 : 0) : 6;
     return { subject, focusQueue: [...priority, ...gap], weight, mastery: averageMastery(subject, state) };
   });
 

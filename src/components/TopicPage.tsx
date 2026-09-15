@@ -10,6 +10,7 @@ import Flashcards from './Flashcards';
 import YouTubeSection from './YouTubeSection';
 import PracticeQuestions from './PracticeQuestions';
 import TopicDiagnostic from './TopicDiagnostic';
+import RichText from './RichText';
 
 type Tab = 'learn' | 'flashcards' | 'videos' | 'practice';
 
@@ -149,9 +150,7 @@ export default function TopicPage() {
               </div>
             )}
             <div className="prose prose-slate max-w-none">
-              {topic.explanation.split('\n\n').map((para, i) => (
-                <p key={i} className="text-slate-700 leading-relaxed mb-4">{para}</p>
-              ))}
+              <RichText text={topic.explanation} />
             </div>
             {!progress?.explanationRead && (
               <button

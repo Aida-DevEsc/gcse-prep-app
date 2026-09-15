@@ -12,6 +12,8 @@ const subjects = [
   { id: 'physics', name: 'Physics', icon: '⚡', path: '/subject/physics' },
   { id: 'history', name: 'History', icon: '📜', path: '/subject/history' },
   { id: 'english', name: 'English', icon: '📝', path: '/subject/english' },
+  { id: 'computerscience', name: 'Computer Science', icon: '💻', path: '/subject/computerscience' },
+  { id: 'spanish', name: 'Spanish', icon: '🇪🇸', path: '/subject/spanish' },
 ];
 
 export default function Layout() {

@@ -5,6 +5,8 @@ import { chemistrySubject } from './chemistry';
 import { physicsSubject } from './physics';
 import { historySubject } from './history';
 import { englishSubject } from './english';
+import { computerScienceSubject } from './computerscience';
+import { spanishSubject } from './spanish';
 import { unitSections } from './examInfo';
 
 // Section order follows the order sections first appear in unitSections (Paper 1 before Paper 2, etc.).
@@ -28,6 +30,8 @@ const subjects: Subject[] = [
   physicsSubject,
   historySubject,
   englishSubject,
+  computerScienceSubject,
+  spanishSubject,
 ].map(withExamSections);
 
 export function getAllSubjects(): Subject[] {
