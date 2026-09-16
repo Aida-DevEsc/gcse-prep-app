@@ -7,9 +7,11 @@ import type { OlympiadPuzzle } from '../data/olympiadPuzzles';
 import { getAllSubjects } from '../data/index';
 import { getSubjectStatuses, countStatuses } from '../utils/diagnostic';
 import StudyPlanCard from './StudyPlanCard';
+import { useProfiles } from '../context/ProfileContext';
 
 export default function Dashboard() {
   const { state, dispatch } = useApp();
+  const { activeProfile } = useProfiles();
   const today = new Date().toISOString().split('T')[0];
   const challenge = getDailyChallenge(today);
   const todayChallenge = state.dailyChallenges[today];
@@ -66,8 +68,8 @@ export default function Dashboard() {
     <div className="p-4 md:p-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-800">Welcome Back! 👋</h1>
-        <p className="text-slate-500 mt-1">Keep pushing for those top grades. Every question counts.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-800">Welcome Back {activeProfile.name}</h1>
+        <p className="text-slate-500 mt-1">Head down, keep pushing. (Unless there is water and all)</p>
       </div>
 
       <StudyPlanCard />

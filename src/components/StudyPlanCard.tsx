@@ -61,7 +61,7 @@ export default function StudyPlanCard() {
         <span className="text-xl">📅</span>
         <h2 className="text-lg font-bold text-slate-800">Your Study Plan</h2>
         <span className="text-xs text-slate-400">
-          {Math.floor(weekMinutes / 60)}h {weekMinutes % 60 ? `${weekMinutes % 60}m` : ''} of study this week · min {MIN_DAILY_MINUTES} min a day, Sunday optional
+          {Math.floor(weekMinutes / 60)}h {weekMinutes % 60 ? `${weekMinutes % 60}m` : ''} of study this week · min {MIN_DAILY_MINUTES} min a day, SUNDAY?WHAT?! optional
         </span>
         <div className="ml-auto flex gap-2">
           <button

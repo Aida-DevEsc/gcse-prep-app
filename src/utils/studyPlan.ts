@@ -82,7 +82,7 @@ export function generateStudyPlan(subjects: Subject[], state: UserState): StudyP
 
 export function dayLabel(day: WeekDay): string {
   const map: Record<WeekDay, string> = {
-    Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday',
+    Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'SUNDAY?WHAT?!',
   };
   return map[day];
 }
