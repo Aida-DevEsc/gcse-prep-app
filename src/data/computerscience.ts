@@ -62,12 +62,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q1",
               "question": "What is the purpose of the CPU?",
               "options": [
-                "To store files permanently",
-                "To fetch, decode and execute instructions",
-                "To display images on the screen",
-                "To connect the computer to a network"
+                "To send images to the monitor for display",
+                "To store files and programs permanently",
+                "To connect the computer to other networks",
+                "To fetch, decode and execute instructions"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "The CPU processes data and instructions by repeatedly carrying out the fetch-decode-execute cycle.",
               "difficulty": "foundation",
               "topicId": "cs-architecture"
@@ -76,12 +76,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q2",
               "question": "Which register holds the address of the next instruction to be fetched?",
               "options": [
-                "MDR",
-                "Accumulator",
                 "Program Counter (PC)",
-                "MAR"
+                "Accumulator (ACC)",
+                "Memory Data Register (MDR)",
+                "Memory Address Register"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "The PC holds the address of the next instruction. It is incremented during each fetch.",
               "difficulty": "foundation",
               "topicId": "cs-architecture"
@@ -90,12 +90,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q3",
               "question": "Which register stores the results of calculations carried out by the ALU?",
               "options": [
-                "Accumulator (ACC)",
-                "Program Counter",
-                "MAR",
-                "MDR"
+                "Memory Address Register",
+                "Program Counter (PC)",
+                "Memory Data Register",
+                "Accumulator (ACC)"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "The accumulator holds the results of calculations performed by the ALU.",
               "difficulty": "intermediate",
               "topicId": "cs-architecture"
@@ -104,12 +104,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q4",
               "question": "What is held in the MDR?",
               "options": [
-                "The address of the next instruction",
-                "The clock speed of the CPU",
-                "Only the result of the last calculation",
-                "The data or instruction fetched from memory, or about to be written to it"
+                "The memory address of the next instruction that is going to be fetched",
+                "Data or an instruction just fetched from, or going to, memory",
+                "Only the result of the last calculation by the ALU",
+                "The clock speed of the CPU in gigahertz"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 1,
               "explanation": "The Memory Data Register holds whatever is being transferred to or from memory.",
               "difficulty": "intermediate",
               "topicId": "cs-architecture"
@@ -146,12 +146,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q7",
               "question": "A phone's CPU is upgraded from 2 to 4 cores, but one app runs no faster. What is the most likely reason?",
               "options": [
-                "The app is not written to split its work across multiple cores",
-                "Extra cores reduce the clock speed to zero",
-                "Cores only affect storage capacity",
-                "Adding cores removes the cache"
+                "Cores only affect the device's storage capacity",
+                "Adding more cores removes the CPU's cache memory",
+                "The app isn't written to use more than one core",
+                "Adding cores reduces the clock speed to zero"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Extra cores only help when a program can divide its work into tasks that run in parallel.",
               "difficulty": "higher",
               "topicId": "cs-architecture"
@@ -160,12 +160,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q8",
               "question": "Why does a larger cache usually improve CPU performance?",
               "options": [
-                "Cache is slower than RAM, so it forces the CPU to wait",
-                "Cache stores files permanently when the power is off",
-                "Cache increases the clock speed",
-                "More frequently used data and instructions can be kept in fast memory close to the CPU, reducing slower RAM accesses"
+                "More often-used data can be kept close to the CPU, so RAM is used less",
+                "Cache is slower than RAM, so a larger cache makes the CPU wait longer",
+                "A larger cache increases the clock speed of every core in the CPU",
+                "Cache keeps files permanently when the power is switched off"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "Cache is much faster than RAM. The more that fits in cache, the less often the CPU has to wait for RAM.",
               "difficulty": "higher",
               "topicId": "cs-architecture"
@@ -174,12 +174,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q9",
               "question": "What is the defining feature of the von Neumann architecture?",
               "options": [
-                "Separate memories for instructions and data",
-                "Instructions and data are stored together in the same memory",
-                "It has no registers",
-                "It can only run one program ever"
+                "The CPU has no registers of any kind",
+                "Instructions and data are kept in separate memories",
+                "Data and instructions share the same memory",
+                "It can only ever run one single program"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "Von Neumann machines store both program instructions and data in a single shared main memory.",
               "difficulty": "further",
               "topicId": "cs-architecture"
@@ -202,12 +202,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-arch-q11",
               "question": "Which is the best example of an embedded system?",
               "options": [
+                "The controller in a washing machine",
                 "A laptop running office software",
                 "A web server hosting many websites",
-                "The controller inside a washing machine",
-                "A desktop PC used for gaming"
+                "A desktop PC used for playing games"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "An embedded system is a computer built into a larger device to perform one dedicated function, like controlling a wash cycle.",
               "difficulty": "further",
               "topicId": "cs-architecture"
@@ -284,10 +284,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-mem-q3",
               "question": "What does ROM typically store?",
               "options": [
-                "The boot-up (bootstrap) instructions needed to start the computer",
-                "The document the user is currently editing",
-                "Web pages being downloaded",
-                "Virtual memory"
+                "The bootstrap instructions that start the computer",
+                "The document or spreadsheet that the user is currently editing",
+                "Web pages that are being downloaded",
+                "Pages of virtual memory swapped out of RAM"
               ],
               "correctAnswer": 0,
               "explanation": "ROM is non-volatile and read-only, so it is used for the start-up instructions.",
@@ -298,12 +298,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-mem-q4",
               "question": "Why do computers need secondary storage?",
               "options": [
-                "Because RAM is non-volatile",
-                "To speed up the clock",
-                "To store data and programs permanently when the power is off",
-                "To replace the CPU"
+                "To take over from the CPU when it is busy",
+                "To keep data and programs when the power is off",
+                "Because RAM keeps its contents with no power",
+                "To speed up the clock of the processor"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "RAM is volatile and limited in size, so non-volatile secondary storage keeps files permanently.",
               "difficulty": "intermediate",
               "topicId": "cs-memory"
@@ -312,12 +312,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-mem-q5",
               "question": "A computer with many programs open becomes very slow. Which explanation is best?",
               "options": [
-                "ROM is full",
-                "The CPU has too much cache",
-                "RAM is full, so slower virtual memory on secondary storage is being used",
-                "The monitor resolution is too high"
+                "The monitor resolution is set much too high",
+                "The CPU has far too much cache memory fitted",
+                "ROM is full, so programs can no longer be loaded",
+                "RAM is full, so slower virtual memory is being used"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Swapping data between RAM and much slower secondary storage causes the slowdown.",
               "difficulty": "higher",
               "topicId": "cs-memory"
@@ -326,12 +326,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-mem-q6",
               "question": "A photographer needs to store 8 TB of images on a desktop as cheaply as possible. Which storage is most suitable?",
               "options": [
-                "Magnetic hard disk drive",
-                "Solid state drive",
-                "Blu-ray discs",
-                "ROM"
+                "Solid state drive (SSD)",
+                "Read-only memory (ROM)",
+                "A stack of Blu-ray discs",
+                "Magnetic hard disk drive"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "HDDs offer very high capacity at the lowest cost per GB, and portability/durability matter less for a desktop.",
               "difficulty": "higher",
               "topicId": "cs-memory"
@@ -340,10 +340,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-mem-q7",
               "question": "Why are solid state drives used in most modern laptops and phones?",
               "options": [
-                "They are volatile",
-                "They are fast, durable with no moving parts, light and use little power",
-                "They are the cheapest storage per GB",
-                "They have moving parts that make them faster"
+                "They are the cheapest storage per gigabyte",
+                "They are fast, robust, light and use little power",
+                "They are volatile, so they lose their data very quickly",
+                "Their moving parts help them read data faster"
               ],
               "correctAnswer": 1,
               "explanation": "Portable devices get knocked about and run on batteries, so SSDs are the best fit.",
@@ -382,12 +382,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-mem-q10",
               "question": "Which list is in order from smallest to largest?",
               "options": [
-                "byte, bit, nibble, kilobyte, gigabyte, megabyte",
-                "bit, byte, nibble, megabyte, kilobyte, terabyte",
-                "bit, nibble, byte, kilobyte, megabyte, gigabyte, terabyte, petabyte",
-                "nibble, bit, byte, gigabyte, megabyte, petabyte"
+                "nibble, bit, byte, GB, MB, KB, TB, PB",
+                "bit, nibble, byte, KB, MB, GB, TB, PB",
+                "byte, bit, nibble, KB, GB, MB, TB, PB",
+                "bit, byte, nibble, MB, KB, TB, GB, PB"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "Each step up is 1,000 (or 1,024) times bigger after the byte.",
               "difficulty": "intermediate",
               "topicId": "cs-memory"
@@ -492,10 +492,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-dr-q5",
               "question": "Increasing the colour depth of an image will:",
               "options": [
-                "Reduce the number of colours available",
-                "Increase the number of possible colours per pixel and increase the file size",
-                "Reduce the resolution",
-                "Remove the metadata"
+                "The metadata being removed from the file",
+                "More colours per pixel and a bigger file",
+                "A lower resolution for the whole image",
+                "Fewer colours available for each pixel"
               ],
               "correctAnswer": 1,
               "explanation": "More bits per pixel means more possible colours, but every pixel now takes more storage.",
@@ -520,12 +520,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-dr-q7",
               "question": "Adding 11001000 and 01000000 using 8 bits causes what?",
               "options": [
-                "A syntax error",
-                "Nothing unusual",
-                "A rounding error",
-                "Overflow — the result (264) needs 9 bits"
+                "Nothing unusual happens at all",
+                "A rounding error in the result",
+                "Overflow, as 264 needs 9 bits",
+                "A syntax error in the program"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 2,
               "explanation": "200 + 64 = 264, which is greater than 255, the largest 8-bit value.",
               "difficulty": "higher",
               "topicId": "cs-data-rep"
@@ -534,12 +534,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-dr-q8",
               "question": "Why does Unicode use more bits per character than ASCII?",
               "options": [
-                "To represent far more characters, including other alphabets and emoji",
-                "To make text load faster",
-                "Because ASCII cannot store numbers",
-                "To compress text"
+                "To compress text so that it takes up less storage space",
+                "To make text load more quickly on web pages and in mobile apps",
+                "To represent many more characters, including other alphabets",
+                "Because ASCII can't store any numbers or digits at all"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "More bits give far more unique codes, so Unicode can cover every writing system.",
               "difficulty": "higher",
               "topicId": "cs-data-rep"
@@ -562,12 +562,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-dr-q10",
               "question": "A 10-second clip is sampled at 44,100 Hz with a bit depth of 16. What is its size in bits?",
               "options": [
+                "7,056,000",
+                "70,560,000",
                 "441,000",
-                "705,600",
-                "70,560",
-                "7,056,000"
+                "705,600"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "44,100 × 16 × 10 = 7,056,000 bits.",
               "difficulty": "further",
               "topicId": "cs-data-rep"
@@ -576,12 +576,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-dr-q11",
               "question": "Which compression should be used for a program's source code, and why?",
               "options": [
-                "Lossy — it gives the smallest file",
-                "Lossy — code does not need every character",
-                "Lossless — the original must be restored exactly or the code will not work",
-                "None — text cannot be compressed"
+                "Lossy — code doesn't need every single character",
+                "Lossy — it always gives the smallest file size",
+                "None — text files can never be compressed at all",
+                "Lossless — the code must be restored exactly"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Losing even one character could stop the program working, so only lossless is acceptable.",
               "difficulty": "further",
               "topicId": "cs-data-rep"
@@ -644,12 +644,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q2",
               "question": "What does DNS do?",
               "options": [
-                "Encrypts web pages",
-                "Translates domain names into IP addresses",
-                "Sends email",
-                "Assigns MAC addresses"
+                "Turns domain names into IP addresses",
+                "Sends and receives email between servers",
+                "Encrypts web pages before they are sent",
+                "Assigns MAC addresses to network cards"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "DNS lets you type a name instead of remembering the numeric IP address.",
               "difficulty": "foundation",
               "topicId": "cs-networks"
@@ -672,12 +672,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q4",
               "question": "What is a key difference between a LAN and a WAN?",
               "options": [
-                "A WAN is always wireless",
-                "A LAN always uses fibre optic cable",
-                "There is no real difference",
-                "A LAN covers a small area using infrastructure the organisation owns; a WAN covers a large area using third-party infrastructure"
+                "A LAN covers a small area on owned kit; a WAN covers a large area on leased links",
+                "A LAN always uses fibre optic cable, while a WAN uses copper cable",
+                "There is no real difference; they are two names for the same kind of network",
+                "A WAN is always wireless, while a LAN always uses physical cables to connect every device"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "Ownership of infrastructure and geographical size are the two key distinctions OCR looks for.",
               "difficulty": "intermediate",
               "topicId": "cs-networks"
@@ -686,12 +686,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q5",
               "question": "Which change would NOT reduce network performance?",
               "options": [
-                "Many users streaming video at once",
-                "Interference on a wireless link",
-                "Switching from wireless to a wired Ethernet connection",
-                "Low bandwidth"
+                "Low bandwidth on the connection",
+                "Many users streaming video at the same time",
+                "Interference on a busy wireless link",
+                "Moving from Wi-Fi to a wired Ethernet cable"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Wired connections are generally faster and more reliable, so this would improve performance.",
               "difficulty": "intermediate",
               "topicId": "cs-networks"
@@ -714,12 +714,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q7",
               "question": "Why are network protocols organised into layers?",
               "options": [
-                "Each layer handles one part of communication, so layers can be developed and changed independently and faults are easier to find",
-                "To make networks slower but safer",
-                "So only one protocol can run at a time",
-                "Because the law requires it"
+                "Because the law in most countries requires networks to use them",
+                "Each layer does one job, so layers can change independently",
+                "To make networks slower but much safer for their users",
+                "So that only one protocol can ever run at any one time"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "Layering breaks a complex job into manageable, self-contained parts.",
               "difficulty": "higher",
               "topicId": "cs-networks"
@@ -742,10 +742,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q9",
               "question": "Which statement about MAC and IP addresses is correct?",
               "options": [
-                "Both change every time you connect",
-                "A MAC address is assigned to the network interface card and normally does not change; an IP address can change depending on the network",
-                "An IP address is permanently built into the NIC",
-                "MAC addresses are used to route data across the internet between networks"
+                "Both addresses change every time a device connects to a network",
+                "A MAC address is fixed to the NIC; an IP address can change",
+                "MAC addresses are used to route data across the internet",
+                "An IP address is permanently built into the network interface card"
               ],
               "correctAnswer": 1,
               "explanation": "MAC = fixed hardware identity; IP = logical address that depends on which network you are on.",
@@ -756,10 +756,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q10",
               "question": "What is the role of TCP in the TCP/IP stack?",
               "options": [
-                "Routing packets between networks",
-                "Translating domain names",
-                "Splitting data into numbered packets, checking they all arrive and requesting re-sends so the data can be reassembled",
-                "Encrypting web pages"
+                "Encrypting web pages sent over the internet",
+                "Routing packets between different networks using IP addresses",
+                "Splitting data into packets and checking they all arrive",
+                "Translating domain names into IP addresses"
               ],
               "correctAnswer": 2,
               "explanation": "TCP handles reliable delivery; IP handles addressing and routing.",
@@ -770,12 +770,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-net-q11",
               "question": "What is the best reason for a school to choose client-server rather than peer-to-peer?",
               "options": [
-                "It needs no server so it is cheaper",
-                "It has no single point of failure",
-                "Every device must keep its own backups",
-                "Files, security, updates and backups can be managed centrally"
+                "Every device keeps its own backups, so data is safer",
+                "Security, updates and backups are managed centrally",
+                "It needs no server, so it is much cheaper to set up",
+                "It has no single point of failure if a machine breaks"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 1,
               "explanation": "Central management is the key advantage for an organisation with many users.",
               "difficulty": "further",
               "topicId": "cs-networks"
@@ -824,12 +824,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q1",
               "question": "What is phishing?",
               "options": [
-                "Flooding a server with requests",
-                "A program that copies itself across a network",
-                "Fake emails or messages pretending to be from a trusted organisation to trick people into giving away details",
-                "Testing a network for weaknesses"
+                "Fake messages from a 'trusted' source that trick people into giving details",
+                "Flooding a web server with so many requests that it stops responding",
+                "A program that copies itself from one computer to another across a network",
+                "Testing a network for weaknesses before criminals can find and exploit them"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Phishing is a form of social engineering — it targets people, not technology.",
               "difficulty": "foundation",
               "topicId": "cs-security"
@@ -838,10 +838,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q2",
               "question": "What does a firewall do?",
               "options": [
-                "Monitors incoming and outgoing network traffic and blocks it according to rules",
-                "Encrypts every file on the hard drive",
-                "Removes viruses from infected files",
-                "Backs up data"
+                "Monitors traffic and blocks it according to rules",
+                "Backs up all data to a remote server nightly",
+                "Encrypts every file stored on the computer's hard drive",
+                "Removes viruses from files that are infected"
               ],
               "correctAnswer": 0,
               "explanation": "A firewall filters traffic between a network and the outside world.",
@@ -866,12 +866,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q4",
               "question": "Which measure best defends against a brute-force password attack?",
               "options": [
-                "Using a larger monitor",
-                "Locking the account after a small number of failed attempts",
-                "Turning off encryption",
-                "Using a peer-to-peer network"
+                "Turning off encryption so logins are processed faster",
+                "Using a larger monitor so passwords are easier to read",
+                "Locking the account after a few failed attempts",
+                "Switching from client-server to a peer-to-peer network"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "Lockouts stop an attacker from trying thousands of combinations.",
               "difficulty": "intermediate",
               "topicId": "cs-security"
@@ -880,12 +880,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q5",
               "question": "What is the aim of a denial of service (DoS) attack?",
               "options": [
-                "To steal passwords",
-                "To encrypt files and demand payment",
-                "To flood a server with requests so it cannot respond to genuine users",
-                "To gain physical access to a server room"
+                "To steal passwords from the users of a website",
+                "To get physical access to a locked server room",
+                "To encrypt files and demand a payment for the key",
+                "To flood a server so it can't serve real users"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "DoS attacks make a service unavailable rather than stealing data.",
               "difficulty": "higher",
               "topicId": "cs-security"
@@ -894,10 +894,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q6",
               "question": "Why is encryption useful if data is intercepted?",
               "options": [
-                "It stops the data being intercepted",
-                "It speeds up transmission",
-                "It removes malware",
-                "The intercepted data is unreadable without the decryption key"
+                "It makes the data travel faster across the network",
+                "It stops the data from being intercepted at all",
+                "It removes any malware hidden inside the data",
+                "It can't be read without the decryption key"
               ],
               "correctAnswer": 3,
               "explanation": "Encryption does not prevent interception — it makes the stolen data useless.",
@@ -908,12 +908,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q7",
               "question": "Why do companies pay for penetration testing?",
               "options": [
-                "To find and fix vulnerabilities by simulating attacks before real criminals exploit them",
-                "To increase network speed",
-                "To install malware on competitors' systems",
-                "Because it is required to use the internet"
+                "To install malware on competitors' computer systems",
+                "To find weaknesses by simulating attacks first",
+                "To make the company network run much faster",
+                "Because every business must do it to use the internet"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "Pen testers are authorised to attack the system and report what they find.",
               "difficulty": "higher",
               "topicId": "cs-security"
@@ -922,12 +922,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q8",
               "question": "Which best describes ransomware?",
               "options": [
-                "A program that shows adverts",
-                "Malware that encrypts a victim's files and demands payment for the key",
-                "A physical lock on a server",
-                "A type of firewall"
+                "A physical lock fitted to the door of a server room",
+                "A program that keeps showing unwanted adverts",
+                "A type of firewall that blocks incoming traffic",
+                "Malware that encrypts files and demands payment"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Ransomware holds data hostage until a ransom is paid.",
               "difficulty": "further",
               "topicId": "cs-security"
@@ -950,12 +950,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sec-q10",
               "question": "Why are people often called the \"weakest link\" in network security?",
               "options": [
-                "Social engineering exploits human trust and mistakes, bypassing technical defences",
-                "People cannot use computers",
-                "Firewalls do not work when people are logged in",
-                "Passwords are always too long"
+                "Passwords chosen by people are always far too long",
+                "Social engineering exploits human trust and mistakes",
+                "Most people simply cannot use computers properly",
+                "Firewalls stop working whenever a person is logged in"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "The strongest firewall is useless if someone hands over their password.",
               "difficulty": "further",
               "topicId": "cs-security"
@@ -1003,12 +1003,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q1",
               "question": "Which is an example of utility software?",
               "options": [
+                "Defragmentation software",
                 "A word processor",
                 "A web browser game",
-                "Defragmentation software",
-                "A spreadsheet"
+                "A spreadsheet application"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Utilities maintain or protect the computer; word processors and spreadsheets are applications.",
               "difficulty": "foundation",
               "topicId": "cs-software"
@@ -1017,10 +1017,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q2",
               "question": "What is the purpose of a device driver?",
               "options": [
-                "To let the operating system communicate with a specific piece of hardware",
-                "To speed up the CPU",
-                "To compress files",
-                "To protect against viruses"
+                "To let the OS communicate with a piece of hardware",
+                "To protect the computer against viruses and worms",
+                "To speed up the CPU by increasing its clock speed",
+                "To compress files so that they take up less space"
               ],
               "correctAnswer": 0,
               "explanation": "Drivers translate OS instructions into commands the device understands.",
@@ -1031,9 +1031,9 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q3",
               "question": "Which OS function allows several programs to appear to run at the same time?",
               "options": [
-                "File management",
-                "User management",
-                "Defragmentation",
+                "File management and folder structure",
+                "Defragmentation of the hard disk",
+                "User management and access rights",
                 "Memory management and multitasking"
               ],
               "correctAnswer": 3,
@@ -1059,10 +1059,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q5",
               "question": "Why does defragmentation improve performance on a hard disk drive?",
               "options": [
-                "It deletes unused files",
-                "It increases the amount of RAM",
-                "It moves parts of files so they are stored together, so the read/write head moves less",
-                "It encrypts the data"
+                "It deletes unused files to free up space on the disk",
+                "It increases the amount of RAM available to programs",
+                "It moves file parts together, so the head moves less",
+                "It encrypts the data so it can be read more quickly"
               ],
               "correctAnswer": 2,
               "explanation": "Less mechanical movement means faster reading of files.",
@@ -1073,10 +1073,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q6",
               "question": "Why should an SSD not usually be defragmented?",
               "options": [
-                "SSDs cannot store files",
-                "SSDs have no moving parts so fragmentation barely affects speed, and extra writes shorten the drive's life",
-                "Defragmentation deletes SSD data",
-                "SSDs are volatile"
+                "Defragmenting an SSD deletes all of the data stored on it",
+                "Fragmentation barely slows SSDs, and extra writes wear them out",
+                "SSDs are volatile, so their data disappears when switched off",
+                "SSDs can't store files, so there is nothing there to defragment"
               ],
               "correctAnswer": 1,
               "explanation": "SSD access time is the same wherever data is stored.",
@@ -1087,12 +1087,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q7",
               "question": "Which feature of a GUI makes it suitable for most users?",
               "options": [
-                "Commands must be memorised",
-                "It only works for experts",
-                "It uses less memory than any other interface",
-                "It uses windows, icons, menus and pointers, so it is intuitive without learning commands"
+                "Windows, icons, menus and pointers are intuitive",
+                "It is designed to be used only by experts",
+                "Users must memorise many typed commands before using it",
+                "It uses less memory than any other interface"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "GUIs are designed to be easy to pick up.",
               "difficulty": "higher",
               "topicId": "cs-software"
@@ -1101,10 +1101,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q8",
               "question": "A network technician prefers a command-line interface. What is the best reason?",
               "options": [
-                "It is easier for beginners",
-                "It has colourful icons",
-                "It uses fewer resources and allows precise commands and scripting of repetitive tasks",
-                "It cannot be automated"
+                "It is much easier for beginners to learn than a graphical interface",
+                "It cannot be automated, so mistakes are less likely to happen",
+                "It uses fewer resources and allows precise, scriptable commands",
+                "It has large, colourful icons that are quick to recognise"
               ],
               "correctAnswer": 2,
               "explanation": "Experts value the speed, power and automation of typed commands.",
@@ -1129,10 +1129,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-sw-q10",
               "question": "Why is compression software useful before emailing a large set of files?",
               "options": [
-                "It encrypts them",
-                "It removes viruses",
-                "It defragments them",
-                "It reduces file size so they transfer faster and fit under attachment size limits"
+                "It encrypts the files so no one else can read them",
+                "It defragments the files so they open more quickly",
+                "It removes any viruses that the files may contain",
+                "Smaller files send faster and fit attachment limits"
               ],
               "correctAnswer": 3,
               "explanation": "Smaller files use less bandwidth and storage.",
@@ -1197,12 +1197,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q2",
               "question": "What is e-waste?",
               "options": [
-                "Deleted emails",
-                "Discarded electronic devices, which can contain toxic materials",
-                "Spam messages",
-                "Unused storage space"
+                "Unused space on a storage device",
+                "Deleted emails in the bin folder",
+                "Spam messages sent to many users",
+                "Discarded electronic devices"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "E-waste is a growing environmental problem when not recycled safely.",
               "difficulty": "foundation",
               "topicId": "cs-impacts"
@@ -1225,12 +1225,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q4",
               "question": "What is a key feature of open-source software?",
               "options": [
-                "It always costs a licence fee",
-                "It can never be updated",
-                "Users are forbidden from sharing it",
-                "Its source code can be viewed, modified and shared"
+                "Its source code can be viewed, changed and shared",
+                "It always costs a licence fee for every user",
+                "It can never be updated once it is released",
+                "Users are forbidden from sharing it with others"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "Open source means the source code is openly available.",
               "difficulty": "intermediate",
               "topicId": "cs-impacts"
@@ -1239,12 +1239,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q5",
               "question": "Copying and sharing a paid-for game online without permission breaks which law?",
               "options": [
-                "Computer Misuse Act 1990",
                 "Copyright, Designs and Patents Act 1988",
+                "Computer Misuse Act 1990",
                 "Data Protection Act 2018",
-                "No law"
+                "Freedom of Information Act 2000 (Section 1)"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "Software is protected as the creator's work.",
               "difficulty": "higher",
               "topicId": "cs-impacts"
@@ -1267,12 +1267,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q7",
               "question": "Why might a business choose proprietary software rather than open source?",
               "options": [
-                "The source code can be edited freely",
-                "It is always free",
-                "It comes with professional support and a company responsible for tested updates",
-                "It cannot contain bugs"
+                "It comes with professional support and tested updates",
+                "It is always free to download and use in a business",
+                "It has been proven not to contain any bugs at all",
+                "Its source code can be edited freely by the business"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Businesses often value guaranteed support and accountability.",
               "difficulty": "higher",
               "topicId": "cs-impacts"
@@ -1281,12 +1281,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q8",
               "question": "Spreading ransomware to encrypt a hospital's files is an offence under which part of the Computer Misuse Act?",
               "options": [
-                "Unauthorised acts with intent to impair the operation of a computer",
-                "It is not covered by the Act",
-                "Copyright infringement",
-                "Unauthorised access only"
+                "It is not covered by the Computer Misuse Act at all",
+                "Unauthorised acts intended to impair a computer",
+                "Copyright infringement of the hospital's software",
+                "Unauthorised access to computer material, only"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "Spreading malware that damages or disables systems is the third CMA offence.",
               "difficulty": "further",
               "topicId": "cs-impacts"
@@ -1295,12 +1295,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q9",
               "question": "Which is an environmental BENEFIT of technology?",
               "options": [
-                "Mining rare metals for components",
-                "Energy used by data centres",
-                "E-waste sent to landfill",
-                "Video conferencing reducing the need to travel"
+                "E-waste being sent to landfill sites",
+                "Video calls reducing the need to travel",
+                "Energy used by large data centres",
+                "Mining rare metals for new components"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 1,
               "explanation": "Less travel means lower carbon emissions.",
               "difficulty": "further",
               "topicId": "cs-impacts"
@@ -1309,12 +1309,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-imp-q10",
               "question": "What is meant by the \"digital divide\"?",
               "options": [
-                "The split between hardware and software",
-                "The gap between people who have access to technology and the internet and those who do not",
-                "The difference between binary and denary",
-                "The split between LAN and WAN"
+                "The difference between binary and denary numbers",
+                "The split between local and wide area networks",
+                "The split between computer hardware and the software that runs on it",
+                "The gap between people with and without internet access"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "The divide can be caused by cost, location, age or skills.",
               "difficulty": "further",
               "topicId": "cs-impacts"
@@ -1369,12 +1369,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-alg-q1",
               "question": "What is decomposition?",
               "options": [
-                "Removing unnecessary detail",
-                "Breaking a problem down into smaller, more manageable sub-problems",
-                "Writing code in binary",
-                "Sorting data alphabetically"
+                "Removing unnecessary detail from a problem",
+                "Sorting a list of data into alphabetical order",
+                "Writing a program directly in binary code",
+                "Breaking a problem into smaller parts"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Decomposition makes a big problem manageable.",
               "difficulty": "foundation",
               "topicId": "cs-algorithms"
@@ -1425,12 +1425,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-alg-q5",
               "question": "What is a trace table used for?",
               "options": [
-                "Drawing flowcharts",
-                "Encrypting data",
-                "Sorting lists",
-                "Recording the values of variables as an algorithm is followed step by step"
+                "Encrypting data before it is transmitted",
+                "Recording variable values as an algorithm runs",
+                "Sorting lists into ascending order",
+                "Drawing flowcharts to plan an algorithm before coding it"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 1,
               "explanation": "Trace tables help find logic errors and predict output.",
               "difficulty": "intermediate",
               "topicId": "cs-algorithms"
@@ -1467,10 +1467,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-alg-q8",
               "question": "Why is merge sort usually faster than bubble sort for very large lists?",
               "options": [
-                "It never compares items",
-                "It only works on numbers",
-                "It repeatedly splits the list and merges sorted sub-lists, needing far fewer comparisons overall",
-                "It sorts in a single pass"
+                "It never needs to compare any items to put them in order",
+                "It only works on numbers, which are quicker to compare",
+                "It splits and merges lists, so it needs far fewer comparisons",
+                "It always sorts the whole list in a single pass through it"
               ],
               "correctAnswer": 2,
               "explanation": "Merge sort scales much better, at the cost of extra memory.",
@@ -1481,9 +1481,9 @@ export const computerScienceSubject: Subject = {
               "id": "cs-alg-q9",
               "question": "A linear search is used on an unsorted list of 1,000 names. What is the maximum number of comparisons?",
               "options": [
-                "1",
+                "1,001",
                 "10",
-                "500",
+                "1",
                 "1,000"
               ],
               "correctAnswer": 3,
@@ -1495,12 +1495,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-alg-q10",
               "question": "A sorted list has 1,024 items. Roughly how many comparisons does a binary search need at most?",
               "options": [
+                "About 10 or 11",
                 "About 100",
                 "About 512",
-                "About 10 or 11",
-                "About 1,024"
+                "About 1,024 or more"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "1,024 halves to 1 in 10 steps (2¹⁰ = 1,024), so around 10–11 comparisons.",
               "difficulty": "further",
               "topicId": "cs-algorithms"
@@ -1509,12 +1509,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-alg-q11",
               "question": "Which sort builds a sorted section one item at a time, placing each new item in its correct position?",
               "options": [
-                "Insertion sort",
-                "Bubble sort",
+                "Linear search sort",
                 "Merge sort",
-                "Binary sort"
+                "Insertion sort",
+                "Bubble sort"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Insertion sort grows a sorted part at the front of the list.",
               "difficulty": "further",
               "topicId": "cs-algorithms"
@@ -1661,12 +1661,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-prog-q8",
               "question": "Which SQL statement returns the names of all students in Year 10?",
               "options": [
-                "GET Name IN Students IF Year = 10",
                 "SELECT Name FROM Students WHERE Year = 10",
                 "SELECT Students FROM Name WHERE 10",
+                "GET Name IN Students IF Year = 10 ORDER BY Name",
                 "FIND Name WHERE Students = 10"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "SELECT field FROM table WHERE condition.",
               "difficulty": "higher",
               "topicId": "cs-programming-fundamentals"
@@ -1717,12 +1717,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-prog-q12",
               "question": "What is the best reason to use a while loop instead of a for loop?",
               "options": [
-                "The loop must repeat until a condition is met and the number of repetitions is not known in advance",
-                "The number of repetitions is known in advance",
-                "While loops always run faster",
-                "For loops cannot use variables"
+                "The number of repetitions is known before the loop starts running",
+                "While loops always run faster than for loops in every language",
+                "For loops cannot use variables, so a while loop has to be used",
+                "It must repeat until a condition is met, number of times unknown"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "While is condition-controlled; for is count-controlled.",
               "difficulty": "further",
               "topicId": "cs-programming-fundamentals"
@@ -1785,12 +1785,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-rob-q2",
               "question": "What is the purpose of a comment in code?",
               "options": [
-                "To make the program run faster",
-                "To validate input",
-                "To explain what the code does for anyone maintaining it; it is ignored when the program runs",
-                "To encrypt the code"
+                "To encrypt the code so no one else can read it",
+                "To explain the code to others; it is ignored at run time",
+                "To validate the data that the user types in",
+                "To make the program run faster by telling it which lines to skip"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "Comments improve maintainability.",
               "difficulty": "foundation",
               "topicId": "cs-robust"
@@ -1814,9 +1814,9 @@ export const computerScienceSubject: Subject = {
               "question": "Which validation check makes sure a field has not been left blank?",
               "options": [
                 "Presence check",
-                "Range check",
+                "Length and format check",
                 "Type check",
-                "Format check"
+                "Range check"
               ],
               "correctAnswer": 0,
               "explanation": "A presence check rejects empty input.",
@@ -1841,12 +1841,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-rob-q6",
               "question": "For a program accepting ages 11–18, \"sixteen\" is which kind of test data?",
               "options": [
+                "Erroneous",
                 "Normal",
                 "Boundary",
-                "Invalid",
-                "Erroneous"
+                "Invalid (out of range)"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "It is the wrong data type (text, not a number), so it is erroneous.",
               "difficulty": "higher",
               "topicId": "cs-robust"
@@ -1869,12 +1869,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-rob-q8",
               "question": "Why is iterative testing carried out during development rather than only at the end?",
               "options": [
-                "It is required by law",
-                "Errors in each module are found and fixed as it is written, when they are easier to locate",
-                "It removes the need for final testing",
-                "It makes programs smaller"
+                "It removes the need for any final testing of the program",
+                "It is a legal requirement for all professional software developers",
+                "It makes the finished program take up less storage space",
+                "Errors are found in each module while they are easy to locate"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Catching problems early is cheaper and easier.",
               "difficulty": "further",
               "topicId": "cs-robust"
@@ -1883,12 +1883,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-rob-q9",
               "question": "Which of these is authentication rather than validation?",
               "options": [
-                "Checking an email address contains an @",
-                "Checking a number is between 1 and 10",
-                "Checking a field is not empty",
-                "Requiring a username and password to confirm the user's identity"
+                "Checking that a field has not been left empty",
+                "Checking that an email address contains an @ symbol",
+                "Checking a username and password to confirm identity",
+                "Checking that a number is between 1 and 10"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 2,
               "explanation": "Authentication is about who the user is.",
               "difficulty": "further",
               "topicId": "cs-robust"
@@ -1897,12 +1897,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-rob-q10",
               "question": "Which change most improves maintainability?",
               "options": [
-                "Splitting code into well-named sub-programs with comments and consistent indentation",
-                "Using single-letter variable names",
-                "Putting all the code on one line",
-                "Removing comments to save space"
+                "Putting all of the code on one line to keep it compact",
+                "Well-named sub-programs, comments and consistent indentation",
+                "Removing every comment from the code to save space",
+                "Using single-letter variable names throughout the program"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "Clear structure and naming make code easier to understand and change.",
               "difficulty": "further",
               "topicId": "cs-robust"
@@ -2145,12 +2145,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-lang-q2",
               "question": "What does a translator do?",
               "options": [
-                "Converts source code into machine code the CPU can execute",
-                "Stores programs in RAM",
-                "Validates input",
-                "Encrypts programs"
+                "Stores programs in RAM while they run",
+                "Encrypts programs before distribution",
+                "Checks that user input is valid",
+                "Turns source code into machine code"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "Compilers, interpreters and assemblers are all translators.",
               "difficulty": "foundation",
               "topicId": "cs-languages"
@@ -2201,10 +2201,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-lang-q6",
               "question": "Why is an interpreter useful while a program is being developed?",
               "options": [
-                "It stops at the first error and shows the line, so errors can be found and fixed as the code runs",
-                "It produces a fast executable file",
-                "It hides the source code",
-                "It translates machine code into Python"
+                "It stops at the first error and shows the line",
+                "It translates machine code back into Python code",
+                "It hides the source code from anyone using the program",
+                "It produces a fast, stand-alone executable file"
               ],
               "correctAnswer": 0,
               "explanation": "Line-by-line translation makes debugging quicker.",
@@ -2215,12 +2215,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-lang-q7",
               "question": "Why might a programmer choose assembly language over a high-level language?",
               "options": [
-                "It is easier to learn",
-                "It runs on any processor",
-                "It gives direct control of hardware and can be very fast and memory-efficient on a specific processor",
-                "It needs no translator"
+                "The same code runs on any type of processor",
+                "Direct hardware control and fast, efficient code",
+                "It is much easier to learn than Python or Java",
+                "It doesn't need any kind of translator to run"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "Useful for embedded systems and drivers where efficiency matters.",
               "difficulty": "higher",
               "topicId": "cs-languages"
@@ -2229,10 +2229,10 @@ export const computerScienceSubject: Subject = {
               "id": "cs-lang-q8",
               "question": "Which statement about compiled programs is correct?",
               "options": [
-                "They must be translated every time they run",
-                "Once compiled, the executable runs without the translator and usually runs faster than interpreted code",
-                "They cannot contain errors",
-                "They always run more slowly than interpreted code"
+                "They cannot contain any errors once they have been compiled",
+                "The executable runs without the translator, usually faster",
+                "They always run more slowly than interpreted programs",
+                "They must be translated again every time they are run"
               ],
               "correctAnswer": 1,
               "explanation": "Translation happens once, up front.",
@@ -2243,12 +2243,12 @@ export const computerScienceSubject: Subject = {
               "id": "cs-lang-q9",
               "question": "What is a breakpoint in an IDE?",
               "options": [
-                "A syntax error",
-                "The end of the program",
-                "A point where the program deliberately pauses so the programmer can inspect variable values",
-                "A type of loop"
+                "A syntax error that stops the program from being translated",
+                "A type of loop that repeats until a condition is met",
+                "The final line of the program, where execution ends",
+                "A point where the program pauses so variables can be checked"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Breakpoints are a key debugging tool.",
               "difficulty": "further",
               "topicId": "cs-languages"

@@ -34,6 +34,7 @@ let flagged = 0;
 let longest = 0;
 for (const [name, qs] of Object.entries(groups)) {
   const bad = qs.filter(standsOut);
+  if (qs.length === 0) continue;
   const isLongest = qs.filter(q => q.options[q.correctAnswer].length === Math.max(...q.options.map(o => o.length))).length;
   total += qs.length; flagged += bad.length; longest += isLongest;
   console.log(`${name.padEnd(22)} ${String(qs.length).padStart(4)} questions  correct-is-longest ${String(Math.round((100 * isLongest) / qs.length)).padStart(3)}%  stands out: ${bad.length}`);
@@ -43,3 +44,4 @@ for (const [name, qs] of Object.entries(groups)) {
   }
 }
 console.log(`TOTAL ${total} questions, correct is longest ${Math.round((100 * longest) / total)}%, stands out ${flagged}`);
+if (flagged > 0) process.exit(1);

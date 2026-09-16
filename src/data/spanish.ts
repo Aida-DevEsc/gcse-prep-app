@@ -57,12 +57,12 @@ export const spanishSubject: Subject = {
               "id": "sp-id-q1",
               "question": "What does \"Me llevo bien con mi hermana\" mean?",
               "options": [
-                "I look like my sister",
                 "I get on well with my sister",
                 "I argue with my sister",
-                "I live with my sister"
+                "I live with my sister",
+                "I look a lot like my older sister"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "Llevarse bien con = to get on well with.",
               "difficulty": "foundation",
               "topicId": "sp-identity"
@@ -127,12 +127,12 @@ export const spanishSubject: Subject = {
               "id": "sp-id-q6",
               "question": "What does \"Cuando era pequeña, me peleaba mucho con mi primo\" tell you?",
               "options": [
-                "She argues a lot with her cousin now",
-                "She will argue with her cousin",
-                "When she was little she used to argue a lot with her cousin",
-                "She never argued with her cousin"
+                "She is going to argue with her cousin when she is older",
+                "She never argued with her cousin when she was little",
+                "She argues a lot with her cousin now that they are older",
+                "When she was little, she often argued with her cousin"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Era and peleaba are imperfect — repeated past actions.",
               "difficulty": "higher",
               "topicId": "sp-identity"
@@ -169,12 +169,12 @@ export const spanishSubject: Subject = {
               "id": "sp-id-q9",
               "question": "Choose the correct form: \"Si tuviera un hermano, ___ muy feliz.\" (grade 8–9 structure)",
               "options": [
+                "serías",
+                "sería",
                 "soy",
-                "seré",
-                "era",
-                "sería"
+                "seré"
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 1,
               "explanation": "Si + imperfect subjunctive (tuviera) is followed by the conditional (sería): \"If I had a brother, I would be very happy.\"",
               "difficulty": "further",
               "topicId": "sp-identity"
@@ -183,12 +183,12 @@ export const spanishSubject: Subject = {
               "id": "sp-id-q10",
               "question": "In \"Nos llevamos genial, aunque a veces discutimos\", what does \"aunque\" add?",
               "options": [
-                "It means \"because\"",
-                "It means \"although\" and adds a contrasting idea, making a more complex sentence",
-                "It means \"always\"",
-                "It means \"never\""
+                "It means \"although\" and adds a contrasting idea",
+                "It means \"never\" and makes the sentence negative",
+                "It means \"because\" and gives a reason for the idea",
+                "It means \"always\" and shows how often they argue"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "Complex sentences with contrast are a hallmark of higher-grade answers.",
               "difficulty": "further",
               "topicId": "sp-identity"
@@ -237,12 +237,12 @@ export const spanishSubject: Subject = {
               "id": "sp-hl-q1",
               "question": "What does \"Como mucha fruta y verdura\" mean?",
               "options": [
-                "I buy fruit and vegetables",
+                "I buy a lot of fruit and vegetables",
+                "I cook a lot of fruit and vegetables",
                 "I eat a lot of fruit and vegetables",
-                "I like fruit but not vegetables",
-                "I cook a lot of fruit"
+                "I like fruit but I don't like vegetables"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "Como = I eat (comer).",
               "difficulty": "foundation",
               "topicId": "sp-healthy"
@@ -251,12 +251,12 @@ export const spanishSubject: Subject = {
               "id": "sp-hl-q2",
               "question": "How do you say \"to be fit\"?",
               "options": [
-                "ser forma",
-                "tener forma",
                 "estar en forma",
-                "hacer forma"
+                "ser en forma",
+                "hacer en forma",
+                "tener la forma"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Estar en forma is the set phrase.",
               "difficulty": "foundation",
               "topicId": "sp-healthy"
@@ -307,12 +307,12 @@ export const spanishSubject: Subject = {
               "id": "sp-hl-q6",
               "question": "What has changed? \"Antes comía mucha comida basura, pero ahora intento comer sano.\"",
               "options": [
-                "She eats junk food now",
-                "She used to eat lots of junk food but now tries to eat healthily",
-                "She has always eaten healthily",
-                "She will start eating junk food"
+                "She has always eaten healthily and still does now",
+                "She has started eating junk food instead of healthy food",
+                "She is going to start eating junk food again soon",
+                "She used to eat junk food but now tries to eat healthily"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Antes + imperfect (comía) vs ahora + present (intento).",
               "difficulty": "higher",
               "topicId": "sp-healthy"
@@ -363,12 +363,12 @@ export const spanishSubject: Subject = {
               "id": "sp-hl-q10",
               "question": "In \"Es esencial que los jóvenes hagan ejercicio\", why \"hagan\" and not \"hacen\"?",
               "options": [
-                "It is the future tense",
-                "After \"es esencial que\" Spanish uses the present subjunctive",
-                "\"Hacen\" is always wrong",
-                "It is the preterite"
+                "\"Es esencial que\" is followed by the subjunctive",
+                "\"Hagan\" is the future tense of the verb hacer",
+                "\"Hacen\" is never correct in any Spanish sentence",
+                "\"Hagan\" is the preterite, as the action is finished"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "Impersonal expressions of necessity + que + a new subject trigger the subjunctive.",
               "difficulty": "further",
               "topicId": "sp-healthy"
@@ -431,12 +431,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ed-q2",
               "question": "What does \"Está prohibido usar el móvil en clase\" mean?",
               "options": [
-                "You must use your mobile in class",
-                "Mobiles are allowed in class",
-                "It is forbidden to use your mobile in class",
-                "I prohibit mobiles in class"
+                "Using your mobile in class is forbidden",
+                "I don't allow mobiles in my classroom",
+                "Mobiles are allowed in class at break time",
+                "You must use your mobile phone in class"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Está prohibido + infinitive = it is forbidden to…",
               "difficulty": "foundation",
               "topicId": "sp-education"
@@ -445,12 +445,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ed-q3",
               "question": "Which means \"I have to do my homework\"?",
               "options": [
-                "Tengo que hacer los deberes",
+                "Hay que los deberes hacer",
                 "Tengo hacer los deberes",
-                "Hay los deberes",
-                "Debo los deberes hacer"
+                "Tengo que hacer los deberes",
+                "Debo de los deberes hacer"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Tener que + infinitive = to have to.",
               "difficulty": "intermediate",
               "topicId": "sp-education"
@@ -473,12 +473,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ed-q5",
               "question": "What does \"Me gustaría trabajar como médico porque quiero ayudar a la gente\" mean?",
               "options": [
-                "I like working as a doctor because I help people",
-                "I would like to work as a doctor because I want to help people",
-                "I worked as a doctor to help people",
-                "I will work as a doctor with people"
+                "I will work as a doctor with people who want to help others",
+                "I worked as a doctor for a while so that I could help people",
+                "I like working as a doctor because I help lots of people every day",
+                "I would like to work as a doctor because I want to help people"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Me gustaría (conditional) = I would like.",
               "difficulty": "higher",
               "topicId": "sp-education"
@@ -515,10 +515,10 @@ export const spanishSubject: Subject = {
               "id": "sp-ed-q8",
               "question": "What does \"Llevo tres años estudiando español\" mean?",
               "options": [
-                "I studied Spanish three years ago",
+                "I carry three Spanish books to school every day",
                 "I have been studying Spanish for three years",
-                "I will study Spanish for three years",
-                "I carry three Spanish books"
+                "I studied Spanish for three years at a school",
+                "I will study Spanish for the next three years"
               ],
               "correctAnswer": 1,
               "explanation": "Llevar + time + gerund expresses how long something has been going on.",
@@ -529,12 +529,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ed-q9",
               "question": "In \"Cuando termine el instituto, quiero hacer un aprendizaje\", why \"termine\"?",
               "options": [
-                "It is the preterite",
-                "It is a mistake — it should be \"termino\"",
-                "\"Cuando\" referring to the future is followed by the present subjunctive",
-                "It is the imperfect"
+                "\"Termine\" is the imperfect, as it describes a habit",
+                "\"Cuando\" + future meaning takes the subjunctive",
+                "\"Termine\" is the preterite, as the action is finished",
+                "It is a mistake — the verb should be \"termino\""
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "Cuando + future meaning → subjunctive: a grade 8–9 structure.",
               "difficulty": "further",
               "topicId": "sp-education"
@@ -543,12 +543,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ed-q10",
               "question": "Which sentence would score highest in a Writing task about school?",
               "options": [
-                "Mi instituto es grande.",
                 "Aunque los profesores son estrictos, me encanta mi instituto porque hay muchas actividades.",
-                "Me gusta el instituto.",
-                "El instituto tiene profesores."
+                "El instituto tiene profesores, alumnos, aulas, un gimnasio, una biblioteca y un comedor grande.",
+                "Mi instituto es grande y tiene muchos profesores y muchos alumnos y muchas clases y muchas aulas.",
+                "Me gusta el instituto y me gustan los profesores y me gustan las asignaturas y me gusta el patio."
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "It combines contrast (aunque), a strong opinion and a justification (porque).",
               "difficulty": "further",
               "topicId": "sp-education"
@@ -646,10 +646,10 @@ export const spanishSubject: Subject = {
               "id": "sp-ft-q4",
               "question": "What does \"Suelo ver series en Netflix\" mean?",
               "options": [
-                "I only watch series on Netflix",
+                "I am going to watch a series on Netflix",
                 "I usually watch series on Netflix",
-                "I don't watch series",
-                "I will watch series"
+                "I only ever watch series on Netflix",
+                "I never watch any series on Netflix"
               ],
               "correctAnswer": 1,
               "explanation": "Soler + infinitive = to usually do something.",
@@ -660,12 +660,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ft-q5",
               "question": "What did they do? \"El fin de semana pasado fui al cine con mis amigos y vimos una película de terror.\"",
               "options": [
-                "Next weekend they will watch a horror film",
-                "They go to the cinema every weekend",
-                "Last weekend they went to the cinema and watched a horror film",
-                "They watched a comedy last weekend"
+                "Last weekend they went to the cinema and saw a horror film",
+                "They go to the cinema with their friends every single weekend",
+                "Next weekend they are going to the cinema to see a horror film",
+                "Last weekend they went to the cinema and watched a comedy"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Fui and vimos are preterite; película de terror = horror film.",
               "difficulty": "higher",
               "topicId": "sp-freetime"
@@ -702,12 +702,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ft-q8",
               "question": "What does \"Hace dos años que toco el piano\" mean?",
               "options": [
-                "I played the piano two years ago",
-                "I will play the piano in two years",
+                "I played the piano two years ago, but I stopped",
                 "I have been playing the piano for two years",
-                "I played the piano for two years"
+                "I will play the piano again in two years' time",
+                "I played the piano for two years when I was young"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "Hace + time + que + present = something that started in the past and is still going on.",
               "difficulty": "further",
               "topicId": "sp-freetime"
@@ -717,9 +717,9 @@ export const spanishSubject: Subject = {
               "question": "What does \"Si tuviera más tiempo libre, aprendería a bailar salsa\" mean?",
               "options": [
                 "If I had more free time, I would learn to dance salsa",
-                "If I have more free time, I will learn salsa",
-                "I had more free time so I learnt salsa",
-                "I would have learnt salsa"
+                "I had more free time, so I learnt how to dance salsa",
+                "If I have more free time, I will learn to dance salsa",
+                "I would have learnt salsa if I had had more free time"
               ],
               "correctAnswer": 0,
               "explanation": "Si + imperfect subjunctive (tuviera) + conditional (aprendería).",
@@ -730,12 +730,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ft-q10",
               "question": "Which sentence shows three different time frames?",
               "options": [
-                "Juego al tenis y nado.",
-                "Me gusta el tenis y la natación.",
-                "Jugaba al tenis.",
-                "Antes jugaba al tenis, ahora prefiero nadar y el año que viene voy a probar el surf."
+                "Me gusta mucho el tenis, me encanta la natación y me interesa bastante el surf también.",
+                "Juego al tenis los lunes, nado los martes, corro los miércoles y hago surf los jueves.",
+                "Antes jugaba al tenis, ahora prefiero nadar y el año que viene voy a probar el surf.",
+                "Jugaba al tenis, nadaba en el mar, corría por el parque y hacía surf con mis primos."
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 2,
               "explanation": "Imperfect (jugaba), present (prefiero) and near future (voy a probar).",
               "difficulty": "further",
               "topicId": "sp-freetime"
@@ -784,10 +784,10 @@ export const spanishSubject: Subject = {
               "id": "sp-fe-q1",
               "question": "What happens at La Tomatina?",
               "options": [
-                "People run with bulls",
-                "Giant figures are burned",
+                "People run through the streets with bulls",
+                "Giant papier-mâché figures are burned",
                 "People throw tomatoes at each other",
-                "People eat twelve grapes"
+                "People eat twelve grapes at midnight"
               ],
               "correctAnswer": 2,
               "explanation": "La Tomatina in Buñol is a huge tomato fight.",
@@ -826,12 +826,12 @@ export const spanishSubject: Subject = {
               "id": "sp-fe-q4",
               "question": "What is the tradition at midnight on Nochevieja in Spain?",
               "options": [
-                "Throwing tomatoes",
-                "Eating twelve grapes, one for each chime of the clock",
-                "Burning giant figures",
-                "Running with bulls"
+                "Running through the streets with bulls",
+                "Throwing tomatoes at friends and family",
+                "Burning giant figures in the main square",
+                "Eating twelve grapes, one on each chime"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Las doce uvas bring good luck for each month of the new year.",
               "difficulty": "intermediate",
               "topicId": "sp-festivals"
@@ -840,10 +840,10 @@ export const spanishSubject: Subject = {
               "id": "sp-fe-q5",
               "question": "What does \"El Día de los Muertos se celebra en México para recordar a los familiares que han muerto\" mean?",
               "options": [
-                "The Day of the Dead is a Spanish Halloween festival",
-                "The Day of the Dead is celebrated in Mexico to remember relatives who have died",
-                "Mexicans celebrate to forget dead relatives",
-                "The festival celebrates the living only"
+                "Mexicans celebrate the day to forget relatives who have died",
+                "In Mexico, the Day of the Dead remembers relatives who have died",
+                "The Day of the Dead is Spain's version of the Halloween festival",
+                "The festival in Mexico is a celebration of living people only"
               ],
               "correctAnswer": 1,
               "explanation": "Recordar = to remember; han muerto = have died (perfect tense).",
@@ -882,12 +882,12 @@ export const spanishSubject: Subject = {
               "id": "sp-fe-q8",
               "question": "In \"Se come mucho turrón en Navidad\", what does \"se come\" mean?",
               "options": [
-                "He eats a lot of turrón",
-                "We ate turrón",
+                "You should eat turrón at Christmas",
                 "A lot of turrón is eaten at Christmas",
-                "Turrón eats a lot"
+                "He eats a lot of turrón at Christmas",
+                "We ate lots of turrón last Christmas"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "Impersonal se describes what people generally do.",
               "difficulty": "further",
               "topicId": "sp-festivals"
@@ -896,12 +896,12 @@ export const spanishSubject: Subject = {
               "id": "sp-fe-q9",
               "question": "What does \"Durante la Semana Santa hay procesiones por las calles\" mean?",
               "options": [
-                "During Christmas there are parades",
-                "During Holy Week (Easter) there are processions through the streets",
-                "Every week there are processions",
-                "Holy Week is a summer festival"
+                "Holy Week is a summer festival with street parties",
+                "There are processions through the streets every week",
+                "At Christmas there are parades through the city streets",
+                "During Holy Week there are processions in the streets"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Semana Santa = Holy Week, the week before Easter.",
               "difficulty": "further",
               "topicId": "sp-festivals"
@@ -910,12 +910,12 @@ export const spanishSubject: Subject = {
               "id": "sp-fe-q10",
               "question": "Which sentence would gain the most credit when describing a festival?",
               "options": [
-                "Las Fallas son en Valencia.",
-                "Me gustan las fiestas.",
-                "Fui a las Fallas el año pasado; fue impresionante ver cómo quemaban los ninots, aunque había demasiada gente.",
-                "Hay fiestas en España."
+                "Me gustan las fiestas españolas y me gustan las Fallas y me gusta la Tomatina.",
+                "Hay muchas fiestas en España, como las Fallas, la Tomatina y los Sanfermines.",
+                "Las Fallas son en Valencia y hay muchas figuras grandes y mucha gente y petardos.",
+                "Fui a las Fallas el año pasado; fue impresionante, aunque había demasiada gente."
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Preterite, imperfect, an evaluation and a contrast in one sentence.",
               "difficulty": "further",
               "topicId": "sp-festivals"
@@ -1020,12 +1020,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ce-q5",
               "question": "What is the speaker's view? \"Los famosos ganan demasiado dinero y no tienen vida privada.\"",
               "options": [
-                "Positive — celebrities deserve their money",
-                "Negative — celebrities earn too much and have no private life",
-                "Neutral",
-                "The speaker wants to be famous"
+                "Neutral — the speaker doesn't give any opinion",
+                "Positive — celebrities deserve every penny they earn",
+                "Negative — they earn too much and lose their privacy",
+                "The speaker would like to become famous one day"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "Demasiado = too much; no tienen vida privada = they have no private life.",
               "difficulty": "higher",
               "topicId": "sp-celebrity"
@@ -1062,12 +1062,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ce-q8",
               "question": "In \"No creo que la fama sea importante\", why \"sea\" and not \"es\"?",
               "options": [
-                "\"No creo que\" expresses doubt, which triggers the subjunctive",
-                "\"Sea\" is the preterite of ser",
-                "It is a spelling mistake",
-                "\"Sea\" is used after all verbs of thinking"
+                "\"Sea\" follows every verb of thinking in Spanish",
+                "\"Sea\" is the preterite form of the verb ser, as the belief is over",
+                "It is a spelling mistake for the word \"es\"",
+                "\"No creo que\" shows doubt, so it takes the subjunctive"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "Creo que + indicative, but no creo que + subjunctive.",
               "difficulty": "further",
               "topicId": "sp-celebrity"
@@ -1076,12 +1076,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ce-q9",
               "question": "What does \"Si fuera famoso, usaría mi fama para ayudar a los demás\" mean?",
               "options": [
-                "If I am famous, I will use my fame",
-                "If I were famous, I would use my fame to help others",
-                "I was famous and used my fame",
-                "I would like to be famous to help myself"
+                "I would like to be famous so that I could help myself",
+                "If I am famous, I will use my fame to help my family",
+                "I was famous once and I used my fame to help others",
+                "If I were famous, I would use my fame to help others"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Si + imperfect subjunctive (fuera) + conditional (usaría).",
               "difficulty": "further",
               "topicId": "sp-celebrity"
@@ -1090,12 +1090,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ce-q10",
               "question": "Which is the most developed opinion?",
               "options": [
-                "Los famosos son guays.",
-                "Me gustan los famosos.",
-                "No me gustan los famosos.",
-                "Aunque algunos famosos son buenos modelos a seguir, creo que muchos jóvenes se sienten presionados por las imágenes perfectas que ven en las redes sociales."
+                "Aunque algunos famosos son buenos modelos, creo que muchos jóvenes se sienten presionados.",
+                "No me gustan los famosos porque son ricos y no me gustan sus fotos en Instagram.",
+                "Los famosos son guays y ricos y tienen coches y casas enormes y ropa muy bonita y muchos amigos.",
+                "Me gustan los famosos y me gustan sus canciones y me gustan sus películas también."
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "It balances two views, gives a reason and uses a relative clause.",
               "difficulty": "further",
               "topicId": "sp-celebrity"
@@ -1249,10 +1249,10 @@ export const spanishSubject: Subject = {
               "id": "sp-tr-q8",
               "question": "What does \"Lo mejor del viaje fue conocer a gente de otros países\" mean?",
               "options": [
-                "The trip was better than meeting people",
-                "I met the best people in other countries",
+                "The trip was even better than getting to know people from other countries",
+                "I met the best people in the world while I was travelling abroad",
                 "The best thing about the trip was meeting people from other countries",
-                "Knowing other countries was better"
+                "Getting to know other countries was better than the trip itself"
               ],
               "correctAnswer": 2,
               "explanation": "Lo mejor = the best thing; conocer a gente = to meet people.",
@@ -1263,9 +1263,9 @@ export const spanishSubject: Subject = {
               "id": "sp-tr-q9",
               "question": "What does \"Si hubiera tenido más dinero, me habría quedado más tiempo\" mean? (grade 9 structure)",
               "options": [
-                "If I have more money, I will stay longer",
-                "If I had more money, I would stay longer",
-                "I had more money so I stayed longer",
+                "If I had more money, I would stay there longer",
+                "I had more money, so I stayed there a lot longer",
+                "If I have more money, I will stay a little longer",
                 "If I had had more money, I would have stayed longer"
               ],
               "correctAnswer": 3,
@@ -1277,12 +1277,12 @@ export const spanishSubject: Subject = {
               "id": "sp-tr-q10",
               "question": "In \"Fui a Madrid y hacía mucho calor\", why \"fui\" but \"hacía\"?",
               "options": [
-                "\"Fui\" is a completed action (preterite); \"hacía calor\" describes the weather at the time (imperfect)",
-                "Both are the same tense",
-                "\"Fui\" is future and \"hacía\" is present",
-                "\"Hacía\" is a mistake"
+                "Both verbs are in exactly the same tense, so they must match each other",
+                "\"Hacía\" is a mistake and should really be \"hizo\" here",
+                "\"Fui\" is a completed action; \"hacía\" describes the weather then",
+                "\"Fui\" is in the future tense and \"hacía\" is in the present"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "This distinction is one of the most tested points in GCSE Spanish.",
               "difficulty": "further",
               "topicId": "sp-travel"
@@ -1331,12 +1331,12 @@ export const spanishSubject: Subject = {
               "id": "sp-me-q1",
               "question": "What does \"Uso mi móvil para chatear con mis amigos\" mean?",
               "options": [
-                "I use my mobile to chat with my friends",
-                "I use my friends' mobiles",
-                "I chat about mobiles",
-                "My friends use my mobile"
+                "I chat with my friends about new mobiles",
+                "My friends use my mobile to send messages",
+                "I use my friends' mobiles to go online",
+                "I use my mobile to chat with my friends"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "Para + infinitive = in order to.",
               "difficulty": "foundation",
               "topicId": "sp-media"
@@ -1346,11 +1346,11 @@ export const spanishSubject: Subject = {
               "question": "What does \"las redes sociales\" mean?",
               "options": [
                 "the social club",
-                "social media / social networks",
                 "the internet café",
-                "the network cable"
+                "social media",
+                "the network cables"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "Red = network.",
               "difficulty": "foundation",
               "topicId": "sp-media"
@@ -1387,12 +1387,12 @@ export const spanishSubject: Subject = {
               "id": "sp-me-q5",
               "question": "What does \"Por un lado, internet es muy útil; por otro lado, puede ser peligroso\" mean?",
               "options": [
-                "On one hand the internet is very useful; on the other hand it can be dangerous",
-                "The internet is useful and never dangerous",
-                "The internet is dangerous on both sides",
-                "One side of the internet is useful"
+                "The internet is dangerous whichever way you choose to look at it",
+                "The internet is very useful for everyone and can never be dangerous for anyone",
+                "On one hand the internet is useful; on the other, it can be dangerous",
+                "One side of the internet is useful, but the other side is not"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Por un lado… por otro lado… structures a balanced argument.",
               "difficulty": "higher",
               "topicId": "sp-media"
@@ -1429,12 +1429,12 @@ export const spanishSubject: Subject = {
               "id": "sp-me-q8",
               "question": "In \"Es importante que los jóvenes protejan su privacidad en línea\", why \"protejan\"?",
               "options": [
-                "It is the future tense",
-                "It is the imperfect",
-                "It is a noun",
-                "\"Es importante que\" + a new subject triggers the present subjunctive"
+                "\"Protejan\" is the future tense of the verb proteger, as it hasn't happened",
+                "\"Protejan\" is the imperfect, describing a past habit",
+                "\"Es importante que\" + a new subject takes the subjunctive",
+                "\"Protejan\" is a noun meaning \"protections\""
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 2,
               "explanation": "Proteger → protejan in the subjunctive (g changes to j to keep the sound).",
               "difficulty": "further",
               "topicId": "sp-media"
@@ -1443,12 +1443,12 @@ export const spanishSubject: Subject = {
               "id": "sp-me-q9",
               "question": "What does \"Si no tuviera móvil, me sentiría aislado\" mean?",
               "options": [
+                "I didn't have a mobile, so I felt very isolated",
+                "If I don't have my mobile, I feel really isolated",
                 "If I didn't have a mobile, I would feel isolated",
-                "If I don't have a mobile, I feel isolated",
-                "I didn't have a mobile so I felt isolated",
-                "I will feel isolated without a mobile"
+                "I will feel isolated without my mobile next year"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Si + imperfect subjunctive + conditional: a hypothetical situation.",
               "difficulty": "further",
               "topicId": "sp-media"
@@ -1457,10 +1457,10 @@ export const spanishSubject: Subject = {
               "id": "sp-me-q10",
               "question": "Which is the best framework for a balanced opinion in the Writing exam?",
               "options": [
-                "Me gusta. No me gusta.",
+                "Es bueno. Es malo. Es bueno. Es muy malo. Es bueno y es malo.",
                 "Por un lado… por otro lado… sin embargo… en conclusión, creo que…",
-                "Es bueno.",
-                "Móvil, internet, redes."
+                "Móvil, internet, redes sociales, ordenador, tableta, aplicaciones.",
+                "Me gusta el móvil. No me gusta el móvil. Me gusta. No me gusta nada."
               ],
               "correctAnswer": 1,
               "explanation": "Connectives organise the argument and show range.",
@@ -1511,12 +1511,12 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q1",
               "question": "What does \"Vivo en un pueblo en el campo\" mean?",
               "options": [
-                "I live in a city centre",
                 "I live in a village in the countryside",
-                "I live by the sea",
-                "I live in the mountains in a city"
+                "I live in a town by the sea",
+                "I live in a city in the mountains",
+                "I live in a flat in the city centre"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "Pueblo = village/small town; el campo = the countryside.",
               "difficulty": "foundation",
               "topicId": "sp-environment"
@@ -1553,12 +1553,12 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q4",
               "question": "What does \"En mi ciudad hay mucho tráfico y contaminación\" mean?",
               "options": [
-                "My town has no traffic",
-                "There is little pollution in my town",
-                "In my town there is a lot of traffic and pollution",
-                "My town is clean and quiet"
+                "My town is clean and quiet, with little traffic",
+                "There is only a little pollution in my town now",
+                "My town has almost no traffic and very little noise",
+                "In my town there is a lot of traffic and pollution"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 3,
               "explanation": "Contaminación = pollution.",
               "difficulty": "intermediate",
               "topicId": "sp-environment"
@@ -1567,12 +1567,12 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q5",
               "question": "Translate: \"We should use public transport more.\"",
               "options": [
+                "Usaremos menos el transporte público",
                 "Deberíamos usar más el transporte público",
-                "Debemos usamos el transporte público",
-                "Usábamos más el transporte público",
-                "Usaremos transporte público menos"
+                "Usábamos mucho más el transporte público",
+                "Debemos usamos más el transporte público"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "Deberíamos (conditional of deber) + infinitive = we should.",
               "difficulty": "higher",
               "topicId": "sp-environment"
@@ -1581,10 +1581,10 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q6",
               "question": "What does \"Antes vivía en una ciudad, pero ahora vivo en la costa\" mean?",
               "options": [
-                "I live in a city and on the coast",
+                "I have always lived on the coast, never in a city",
                 "I used to live in a city, but now I live on the coast",
-                "I will move to the coast",
-                "I have always lived on the coast"
+                "I am going to move from the city to the coast soon",
+                "I live in a city during the week and on the coast at weekends"
               ],
               "correctAnswer": 1,
               "explanation": "Vivía (imperfect) contrasts with vivo (present).",
@@ -1609,12 +1609,12 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q8",
               "question": "What does \"Si todos recicláramos, habría menos basura\" mean?",
               "options": [
+                "There will be less rubbish if you recycle at home",
                 "If everyone recycled, there would be less rubbish",
-                "If everyone recycles, there is less rubbish",
-                "Everyone recycled and there was less rubbish",
-                "There will be less rubbish if you recycle"
+                "If everyone recycles, there is always less rubbish",
+                "Everyone recycled, so there was much less rubbish"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 1,
               "explanation": "Si + imperfect subjunctive (recicláramos) + conditional (habría).",
               "difficulty": "further",
               "topicId": "sp-environment"
@@ -1623,12 +1623,12 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q9",
               "question": "In \"Es una pena que la gente no cuide el planeta\", why \"cuide\"?",
               "options": [
-                "It is the preterite",
-                "It is the imperative only",
-                "\"Es una pena que\" expresses emotion, which triggers the present subjunctive",
-                "It is a noun"
+                "\"Es una pena que\" shows emotion, so it takes the subjunctive",
+                "\"Cuide\" is a noun meaning \"care\" or \"attention\"",
+                "\"Cuide\" is only ever used as a command (imperative)",
+                "\"Cuide\" is the preterite form of the verb cuidar, for a finished action"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 0,
               "explanation": "Expressions of emotion + que + a new subject take the subjunctive.",
               "difficulty": "further",
               "topicId": "sp-environment"
@@ -1637,12 +1637,12 @@ export const spanishSubject: Subject = {
               "id": "sp-en-q10",
               "question": "Which sentence shows the widest range of structures?",
               "options": [
-                "Me preocupa la contaminación.",
-                "Reciclo.",
-                "La contaminación es mala.",
-                "Lo que más me preocupa es la contaminación; por eso, desde hace un año voy al instituto en bici y en el futuro me gustaría instalar paneles solares."
+                "Lo que más me preocupa es la contaminación; por eso, voy en bici y me gustaría instalar paneles solares.",
+                "La contaminación es mala, el tráfico es malo, la basura es mala, el ruido es malo y el calor es malo también.",
+                "Reciclo el papel, reciclo el vidrio, reciclo el plástico, reciclo las latas y reciclo la ropa vieja en casa.",
+                "Me preocupa la contaminación. Me preocupa el tráfico. Me preocupa la basura. Me preocupa el ruido. Me preocupa todo."
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 0,
               "explanation": "Lo que…, desde hace + present, and a conditional — three different structures.",
               "difficulty": "further",
               "topicId": "sp-environment"
@@ -1740,12 +1740,12 @@ export const spanishSubject: Subject = {
               "id": "sp-te-q4",
               "question": "Complete: \"Me ___ ir a Perú.\" (I would like)",
               "options": [
-                "gusta",
                 "gustaría",
-                "gustó",
-                "gustará"
+                "gusta",
+                "gustaban",
+                "gustó"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 0,
               "explanation": "Gustaría is the conditional.",
               "difficulty": "intermediate",
               "topicId": "sp-tenses"
@@ -1838,12 +1838,12 @@ export const spanishSubject: Subject = {
               "id": "sp-te-q11",
               "question": "Which sentence uses three different tenses correctly?",
               "options": [
-                "Normalmente juego al baloncesto, pero ayer nadé y mañana voy a correr.",
-                "Normalmente jugué al baloncesto, pero ayer nado y mañana corrí.",
-                "Juego, nado, corro.",
-                "Ayer juego y mañana jugué."
+                "Ayer juego al baloncesto, mañana jugué al tenis y normalmente nadaré.",
+                "Normalmente juego al baloncesto, pero ayer nado y mañana juego al tenis.",
+                "Normalmente jugué al baloncesto, pero ayer nado y mañana voy a corrí.",
+                "Normalmente juego al baloncesto, pero ayer nadé y mañana voy a correr."
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "Present (juego), preterite (nadé) and near future (voy a correr), each matching its time marker.",
               "difficulty": "further",
               "topicId": "sp-tenses"
@@ -1949,11 +1949,11 @@ export const spanishSubject: Subject = {
               "question": "Complete: \"Voy a Madrid ___ ver a mis abuelos.\" (in order to)",
               "options": [
                 "por",
-                "para",
+                "hacia",
                 "de",
-                "a"
+                "para"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 3,
               "explanation": "Para + infinitive expresses purpose.",
               "difficulty": "higher",
               "topicId": "sp-grammar-core"
@@ -1990,12 +1990,12 @@ export const spanishSubject: Subject = {
               "id": "sp-gr-q8",
               "question": "\"¿El regalo? Se lo di a mi madre.\" What do \"se\" and \"lo\" refer to?",
               "options": [
-                "\"Se\" = to her (my mother); \"lo\" = it (the present)",
-                "\"Se\" = himself; \"lo\" = the mother",
-                "\"Se lo\" means \"myself\"",
-                "It means \"I gave it to myself\""
+                "\"se lo\" together means \"myself\" in this sentence",
+                "\"se\" = himself; \"lo\" = my mother, who got the present",
+                "\"se\" = to her (my mother); \"lo\" = it (the present)",
+                "It means \"I gave it to myself\" instead of to my mother"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Le becomes se before lo: se lo di = I gave it to her.",
               "difficulty": "further",
               "topicId": "sp-grammar-core"
@@ -2100,12 +2100,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ex-q3",
               "question": "In the dictation section, how is \"ll\" usually pronounced?",
               "options": [
-                "Like an English \"l\"",
-                "Silent",
-                "Like \"j\"",
-                "Like the \"y\" in \"yes\""
+                "Like the \"l\" in \"lip\"",
+                "It is silent",
+                "Like the \"y\" in \"yes\"",
+                "Like the Spanish \"j\""
               ],
-              "correctAnswer": 3,
+              "correctAnswer": 2,
               "explanation": "Most Spanish speakers pronounce ll like y.",
               "difficulty": "intermediate",
               "topicId": "sp-exam-skills"
@@ -2114,12 +2114,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ex-q4",
               "question": "Which time marker signals the imperfect tense?",
               "options": [
-                "Cuando era pequeño…",
-                "Ayer…",
-                "Mañana…",
-                "El año que viene…"
+                "El año que viene…",
+                "Mañana por la mañana…",
+                "Ayer por la tarde…",
+                "Cuando era pequeño…"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 3,
               "explanation": "Cuando era pequeño (when I was little) introduces what used to happen.",
               "difficulty": "intermediate",
               "topicId": "sp-exam-skills"
@@ -2128,12 +2128,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ex-q5",
               "question": "Best translation of \"Normalmente voy al instituto a pie, pero hoy he venido en autobús\":",
               "options": [
-                "I usually go to school by bus, but today I walked",
+                "Normally I go to school on foot and by bus every day",
+                "I always walk to school, and today I also came by bus",
                 "I usually walk to school, but today I have come by bus",
-                "I always walk to school and came by bus",
-                "Normally I go to school by foot and bus"
+                "I usually go to school by bus, but today I have walked"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "A pie = on foot; he venido = I have come (perfect tense).",
               "difficulty": "higher",
               "topicId": "sp-exam-skills"
@@ -2142,12 +2142,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ex-q6",
               "question": "In a Writing task, which phrase best gives a justified opinion?",
               "options": [
+                "Me gusta la. Me gusta el. Me gusta los.",
+                "Es un deporte. Juego al fútbol. Es fútbol.",
                 "Me encanta porque me ayuda a relajarme",
-                "Es",
-                "Sí",
-                "Me gusta la"
+                "Sí, sí, me gusta, sí, me gusta el fútbol, sí"
               ],
-              "correctAnswer": 0,
+              "correctAnswer": 2,
               "explanation": "Opinion (me encanta) + reason (porque me ayuda a relajarme).",
               "difficulty": "higher",
               "topicId": "sp-exam-skills"
@@ -2156,12 +2156,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ex-q7",
               "question": "Reading: \"Mi hermano no ha ido nunca a España.\" Which statement is true?",
               "options": [
-                "His brother went to Spain once",
-                "His brother lives in Spain",
+                "His brother has been to Spain once",
                 "His brother has never been to Spain",
-                "His brother is going to Spain"
+                "His brother is going to Spain next year",
+                "His brother has lived in Spain for years"
               ],
-              "correctAnswer": 2,
+              "correctAnswer": 1,
               "explanation": "No … nunca = never; ha ido = has been (perfect).",
               "difficulty": "higher",
               "topicId": "sp-exam-skills"
@@ -2184,12 +2184,12 @@ export const spanishSubject: Subject = {
               "id": "sp-ex-q9",
               "question": "Which is the best strategy for the photo card task?",
               "options": [
-                "Only list the objects in the photo",
-                "Describe what you can see, give opinions with reasons, and use more than one tense where you can",
-                "Say you don't understand",
-                "Answer in English"
+                "Only list the objects in the photo, using as many nouns as possible",
+                "Answer in English, so that the examiner understands all of your ideas",
+                "Describe the photo, give justified opinions and use more than one tense",
+                "Say that you don't understand, so the teacher asks an easier question"
               ],
-              "correctAnswer": 1,
+              "correctAnswer": 2,
               "explanation": "Development, justification and range are what lift the mark.",
               "difficulty": "further",
               "topicId": "sp-exam-skills"
