@@ -19,8 +19,16 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
+          // When a new release takes over, reload once so the latest version shows straight away.
+          const hadController = !!navigator.serviceWorker.controller;
+          let reloaded = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!hadController || reloaded) return;
+            reloaded = true;
+            window.location.reload();
+          });
           navigator.serviceWorker.register('/gcse-prep-app/sw.js')
-            .then(reg => console.log('SW registered:', reg.scope))
+            .then(reg => reg.update())
             .catch(err => console.log('SW registration failed:', err));
         });
       }

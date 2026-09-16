@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smooth-operator-v2';
+const CACHE_NAME = 'smooth-operator-v3';
 
 const PRECACHE_URLS = [
   '/gcse-prep-app/',
@@ -34,13 +34,14 @@ self.addEventListener('fetch', (event) => {
   // Navigation requests: network first, fall back to cache
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request)
+      // Bypass the browser's HTTP cache so a new release shows up on the next visit.
+      fetch(request, { cache: 'no-store' })
         .then((response) => {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
           return response;
         })
-        .catch(() => caches.match('/gcse-prep-app/index.html'))
+        .catch(() => caches.match(request).then((cached) => cached || caches.match('/gcse-prep-app/index.html')))
     );
     return;
   }
