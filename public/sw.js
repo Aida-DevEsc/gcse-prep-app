@@ -1,4 +1,4 @@
-const CACHE_NAME = 'aceprep-gcse-v1';
+const CACHE_NAME = 'smooth-operator-v2';
 
 const PRECACHE_URLS = [
   '/gcse-prep-app/',

@@ -21,7 +21,7 @@ const CALC_RULES = [
 
 export const furtherMathsSet1: AppExamSet = {
   id: 'fm-set1',
-  label: 'AcePrep Further Maths Set 1',
+  label: 'Smooth Operator Further Maths Set 1',
   grades: FM_GRADES,
   // Average of AQA's June 2022 and June 2023 8365 subject boundaries (out of 160).
   totalBoundaries: [133, 115, 98, 79, 61, 52],

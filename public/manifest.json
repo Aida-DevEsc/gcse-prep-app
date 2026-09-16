@@ -1,6 +1,6 @@
 {
-  "name": "AcePrep GCSE",
-  "short_name": "AcePrep",
+  "name": "Smooth Operator",
+  "short_name": "Smooth Op",
   "description": "GCSE revision app with practice questions, mock exams, flashcards and more",
   "start_url": "/gcse-prep-app/",
   "scope": "/gcse-prep-app/",

@@ -33,8 +33,8 @@ export default function Layout() {
           </svg>
         </button>
         <NavLink to="/" className="flex items-center gap-2 no-underline" onClick={closeSidebar}>
-          <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">A</div>
-          <span className="font-bold text-slate-800">AcePrep</span>
+          <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xs">SO</div>
+          <span className="font-bold text-slate-800">Smooth Operator</span>
         </NavLink>
         <ProfileSwitcher />
       </div>
@@ -55,9 +55,9 @@ export default function Layout() {
         {/* Logo */}
         <div className="p-5 border-b border-slate-200 flex items-center justify-between">
           <NavLink to="/" className="flex items-center gap-2 no-underline" onClick={closeSidebar}>
-            <div className="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">A</div>
+            <div className="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-base">SO</div>
             <div>
-              <h1 className="text-lg font-bold text-slate-800 leading-none">AcePrep</h1>
+              <h1 className="text-lg font-bold text-slate-800 leading-none">Smooth Operator</h1>
               <p className="text-[11px] text-slate-400 leading-none mt-0.5">GCSE Excellence</p>
             </div>
           </NavLink>
