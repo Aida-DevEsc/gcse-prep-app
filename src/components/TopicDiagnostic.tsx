@@ -49,9 +49,8 @@ export default function TopicDiagnostic({ questions, topicName, subjectColor, on
   const [diagQuestions] = useState(() => pickDiagnosticQuestions(questions));
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
+  // Chosen option per question; 'skip' means she moved on without answering (it counts as wrong unless she comes back).
+  const [answers, setAnswers] = useState<Record<number, number | 'skip'>>({});
 
   if (diagQuestions.length === 0) {
     // No questions to diagnose with — skip straight to intermediate practice.
@@ -85,25 +84,32 @@ export default function TopicDiagnostic({ questions, topicName, subjectColor, on
   }
 
   const question = diagQuestions[currentIndex];
+  const chosen = answers[currentIndex];
+  const answered = typeof chosen === 'number';
+  const isLast = currentIndex === diagQuestions.length - 1;
+  const doneCount = Object.values(answers).filter(a => typeof a === 'number').length;
 
   const handleAnswer = (i: number) => {
-    if (showExplanation) return;
-    setSelectedAnswer(i);
-    setShowExplanation(true);
-    if (i === question.correctAnswer) setCorrectCount(c => c + 1);
+    if (answered) return;
+    setAnswers(prev => ({ ...prev, [currentIndex]: i }));
+  };
+
+  const finish = (final: Record<number, number | 'skip'>) => {
+    const correct = diagQuestions.filter((q, i) => final[i] === q.correctAnswer).length;
+    const score = Math.round((correct / diagQuestions.length) * 100);
+    onComplete(levelFromScore(score, highestAvailable), correct, diagQuestions.length);
   };
 
   const handleNext = () => {
-    if (currentIndex < diagQuestions.length - 1) {
-      setCurrentIndex(i => i + 1);
-      setSelectedAnswer(null);
-      setShowExplanation(false);
-    } else {
-      // correctCount already reflects this final answer (updated synchronously in handleAnswer above).
-      const score = Math.round((correctCount / diagQuestions.length) * 100);
-      const level = levelFromScore(score, highestAvailable);
-      onComplete(level, correctCount, diagQuestions.length);
-    }
+    if (isLast) finish(answers);
+    else setCurrentIndex(i => i + 1);
+  };
+
+  const handleSkip = () => {
+    const next = answered ? answers : { ...answers, [currentIndex]: 'skip' as const };
+    setAnswers(next);
+    if (isLast) finish(next);
+    else setCurrentIndex(i => i + 1);
   };
 
   return (
@@ -115,7 +121,7 @@ export default function TopicDiagnostic({ questions, topicName, subjectColor, on
       <div className="w-full bg-slate-100 rounded-full h-1.5">
         <div
           className="h-1.5 rounded-full transition-all"
-          style={{ width: `${((currentIndex + (showExplanation ? 1 : 0)) / diagQuestions.length) * 100}%`, backgroundColor: subjectColor }}
+          style={{ width: `${(doneCount / diagQuestions.length) * 100}%`, backgroundColor: subjectColor }}
         />
       </div>
 
@@ -124,15 +130,15 @@ export default function TopicDiagnostic({ questions, topicName, subjectColor, on
         <div className="space-y-2">
           {question.options.map((option, i) => {
             let btnClass = 'w-full p-4 rounded-lg text-left text-sm font-medium transition-all border-2 ';
-            if (showExplanation) {
+            if (answered) {
               if (i === question.correctAnswer) btnClass += 'bg-emerald-50 border-emerald-400 text-emerald-800';
-              else if (i === selectedAnswer) btnClass += 'bg-red-50 border-red-400 text-red-800';
+              else if (i === chosen) btnClass += 'bg-red-50 border-red-400 text-red-800';
               else btnClass += 'bg-slate-50 border-slate-200 text-slate-400';
             } else {
               btnClass += 'bg-white border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 cursor-pointer text-slate-700';
             }
             return (
-              <button key={i} onClick={() => handleAnswer(i)} disabled={showExplanation} className={btnClass}>
+              <button key={i} onClick={() => handleAnswer(i)} disabled={answered} className={btnClass}>
                 <span className="inline-flex items-center gap-3">
                   <span className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500">
                     {String.fromCharCode(65 + i)}
@@ -144,15 +150,29 @@ export default function TopicDiagnostic({ questions, topicName, subjectColor, on
           })}
         </div>
 
-        {showExplanation && (
-          <button
-            onClick={handleNext}
-            className="mt-4 w-full py-3 text-white rounded-lg font-medium"
-            style={{ backgroundColor: subjectColor }}
-          >
-            {currentIndex === diagQuestions.length - 1 ? 'See my starting level →' : 'Next Question →'}
-          </button>
+        {answered && question.explanation && (
+          <p className="mt-4 text-sm text-slate-600 bg-slate-50 rounded-lg p-3">{question.explanation}</p>
         )}
+
+        <div className="mt-4 flex items-center gap-2">
+          <button
+            onClick={() => setCurrentIndex(i => i - 1)}
+            disabled={currentIndex === 0}
+            className="px-4 py-3 rounded-lg font-medium border border-slate-300 text-slate-600 disabled:opacity-30"
+          >
+            ← Back
+          </button>
+          {answered ? (
+            <button onClick={handleNext} className="flex-1 py-3 text-white rounded-lg font-medium" style={{ backgroundColor: subjectColor }}>
+              {isLast ? 'See my starting level →' : 'Next Question →'}
+            </button>
+          ) : (
+            <button onClick={handleSkip} className="flex-1 py-3 rounded-lg font-medium border border-slate-300 text-slate-600 hover:bg-slate-50">
+              {isLast ? 'Skip & see my level →' : 'Skip →'}
+            </button>
+          )}
+        </div>
+        {chosen === 'skip' && <p className="text-xs text-slate-400 mt-2">You skipped this one — answer it now or it counts as not known.</p>}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import type { UserState, TopicProgress, CheckpointResult, DiagnosticResult, Badge, YouTubeVideo, StudyPlan, StudyPlanDay, PastPaperAttempt } from '../types';
+import type { ExamDraft } from '../types/exam';
 import { loadState, saveState } from '../utils/storage';
 import { calculateLevel, XP_REWARDS } from '../utils/xp';
 
@@ -19,6 +20,8 @@ type Action =
   | { type: 'UPDATE_STUDY_PLAN_DAY'; day: StudyPlanDay['day']; patch: Partial<StudyPlanDay> }
   | { type: 'ADD_PAST_PAPER_ATTEMPT'; attempt: PastPaperAttempt }
   | { type: 'DELETE_PAST_PAPER_ATTEMPT'; id: string }
+  | { type: 'SAVE_EXAM_DRAFT'; draft: ExamDraft }
+  | { type: 'CLEAR_EXAM_DRAFT'; paperId: string }
   | { type: 'RESET_STATE'; profileId: string };
 
 function reducer(state: UserState, action: Action): UserState {
@@ -169,6 +172,13 @@ function reducer(state: UserState, action: Action): UserState {
     }
     case 'DELETE_PAST_PAPER_ATTEMPT':
       return { ...state, pastPaperAttempts: state.pastPaperAttempts.filter(a => a.id !== action.id) };
+    case 'SAVE_EXAM_DRAFT':
+      return { ...state, examDrafts: { ...state.examDrafts, [action.draft.paperId]: action.draft } };
+    case 'CLEAR_EXAM_DRAFT': {
+      const drafts = { ...state.examDrafts };
+      delete drafts[action.paperId];
+      return { ...state, examDrafts: drafts };
+    }
     case 'RESET_STATE':
       return loadState(action.profileId);
     default:

@@ -1,3 +1,5 @@
+import type { ExamDraft } from './exam';
+
 export interface Question {
   id: string;
   topicId: string;
@@ -115,6 +117,9 @@ export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
 
 export interface StudySession {
   id: string;
+  /** 'custom' is her own free-text slot (e.g. a project); it doesn't count towards the daily study minimum. */
+  kind?: 'subject' | 'custom';
+  label?: string;
   subjectId: string;
   /** Optional: focus on one specific topic instead of general subject revision */
   topicId?: string | null;
@@ -128,6 +133,9 @@ export interface StudyPlanDay {
 
 /** Minimum total study time per day, per the school's "at least one hour every day" guidance. */
 export const MIN_DAILY_MINUTES = 60;
+
+/** Days where studying is optional, so the minimum doesn't apply. */
+export const OPTIONAL_STUDY_DAYS: WeekDay[] = ['Sun'];
 
 export type StudyPlan = StudyPlanDay[];
 
@@ -144,6 +152,9 @@ export interface PastPaperAttempt {
   /** Marks lost on each topic, tagged by the student while marking. */
   lostByTopic: Record<string, number>;
   minutesTaken?: number;
+  /** In-app exams only: what she typed and the marks for each part, so the paper can be reviewed later. */
+  answers?: Record<string, string>;
+  partMarks?: Record<string, number>;
 }
 
 export interface UserState {
@@ -163,6 +174,7 @@ export interface UserState {
   studyPlan: StudyPlan;
   studyPlanUpdatedAt?: string;
   pastPaperAttempts: PastPaperAttempt[];
+  examDrafts: Record<string, ExamDraft>;
 }
 
 export interface Profile {

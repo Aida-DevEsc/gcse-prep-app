@@ -47,13 +47,25 @@ export default function DiagnosticTest() {
     const q = questions[currentIndex];
     const newAnswers = { ...answers, [q.id]: answerIndex };
     setAnswers(newAnswers);
-    dispatch({ type: 'ANSWER_QUESTION', correct: answerIndex === q.correctAnswer });
+    // On the last question, wait for "Finish" if earlier questions were skipped so she can go back to them.
+    const isLast = currentIndex === questions.length - 1;
+    if (isLast && questions.some(x => newAnswers[x.id] === undefined)) return;
+    goForward(newAnswers);
+  };
 
+  /** Skipped questions count as not known unless she goes back and answers them. */
+  const goForward = (current: Record<string, number>) => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
       return;
     }
+    finish(current);
+  };
 
+  const finish = (newAnswers: Record<string, number>) => {
+    for (const q of questions) {
+      if (newAnswers[q.id] !== undefined) dispatch({ type: 'ANSWER_QUESTION', correct: newAnswers[q.id] === q.correctAnswer });
+    }
     const quizResult = scoreQuiz(questions, newAnswers, startTime);
     setResult(quizResult);
     setStage('results');
@@ -282,7 +294,9 @@ export default function DiagnosticTest() {
             <button
               key={i}
               onClick={() => handleAnswer(i)}
-              className="w-full p-4 rounded-lg text-left text-sm font-medium border-2 border-slate-200 bg-white hover:border-indigo-300 hover:bg-indigo-50 transition-all text-slate-700"
+              className={`w-full p-4 rounded-lg text-left text-sm font-medium border-2 transition-all text-slate-700 ${
+                answers[question.id] === i ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-indigo-50'
+              }`}
             >
               <span className="inline-flex items-center gap-3">
                 <span className="w-7 h-7 shrink-0 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500">
@@ -293,6 +307,28 @@ export default function DiagnosticTest() {
             </button>
           ))}
         </div>
+        <div className="mt-4 flex items-center gap-2">
+          <button
+            onClick={() => setCurrentIndex(i => i - 1)}
+            disabled={currentIndex === 0}
+            className="px-4 py-2.5 rounded-lg text-sm font-medium border border-slate-300 text-slate-600 disabled:opacity-30"
+          >
+            ← Back
+          </button>
+          <span className="flex-1" />
+          {answers[question.id] !== undefined && currentIndex < questions.length - 1 ? (
+            <button onClick={() => setCurrentIndex(i => i + 1)} className="px-4 py-2.5 rounded-lg text-sm font-medium border border-slate-300 text-slate-600">
+              Next →
+            </button>
+          ) : (
+            <button onClick={() => goForward(answers)} className="px-4 py-2.5 rounded-lg text-sm font-medium border border-slate-300 text-slate-600 hover:bg-slate-50">
+              {currentIndex === questions.length - 1 ? (answers[question.id] !== undefined ? 'Finish →' : 'Skip & finish →') : 'Skip →'}
+            </button>
+          )}
+        </div>
+        {questions.some((x, i) => i < currentIndex && answers[x.id] === undefined) && (
+          <p className="text-xs text-slate-400 mt-2">Skipped questions count as not known — use Back to answer them before you finish.</p>
+        )}
       </div>
       <button
         onClick={() => { if (confirm('Leave the diagnostic? Answers so far will not be saved.')) setStage('choose'); }}

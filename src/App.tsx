@@ -9,6 +9,7 @@ import DiagnosticTest from './components/DiagnosticTest';
 import Checkpoint from './components/Checkpoint';
 import MockTest from './components/MockTest';
 import BadgeDisplay from './components/BadgeDisplay';
+import ExamRunner from './components/ExamRunner';
 
 function ActiveProfileApp() {
   // Remounting AppProvider by key when the profile changes gives each profile a clean,
@@ -26,6 +27,7 @@ function ActiveProfileApp() {
             <Route path="/subject/:subjectId/diagnostic" element={<DiagnosticTest />} />
             <Route path="/subject/:subjectId/checkpoint" element={<Checkpoint />} />
             <Route path="/subject/:subjectId/mock-test" element={<MockTest />} />
+            <Route path="/subject/:subjectId/exam/:paperId" element={<ExamRunner />} />
             <Route path="/badges" element={<BadgeDisplay />} />
           </Route>
         </Routes>

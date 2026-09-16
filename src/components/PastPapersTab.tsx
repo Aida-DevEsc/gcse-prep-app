@@ -11,6 +11,7 @@ import {
 import type { GradeResult } from '../utils/pastPapers';
 import { STATUS_META } from '../utils/diagnostic';
 import { XP_REWARDS } from '../utils/xp';
+import AppExamsSection from './AppExamsSection';
 
 function gradeClass(grade: string): string {
   if (grade === '9' || grade === '8' || grade === '7') return 'bg-emerald-100 text-emerald-800 border-emerald-300';
@@ -377,9 +378,11 @@ export default function PastPapersTab({ subject }: { subject: Subject }) {
 
   return (
     <div className="space-y-5">
+      <AppExamsSection subjectId={subject.id} />
+
       {/* How it works */}
       <div className="bg-slate-800 text-white rounded-xl p-4 md:p-5">
-        <h3 className="font-bold mb-2">📄 Real past papers, marked by you</h3>
+        <h3 className="font-bold mb-2">📄 Real AQA past papers — sit on paper, mark with AQA’s mark scheme</h3>
         <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs text-slate-200">
           <li className="bg-slate-700/60 rounded-lg p-2.5"><strong className="text-white block mb-0.5">1. Sit it</strong>Open the question paper, set a timer and follow the calculator rule.</li>
           <li className="bg-slate-700/60 rounded-lg p-2.5"><strong className="text-white block mb-0.5">2. Mark it</strong>Use AQA's mark scheme. Be strict — it's how the examiner marks.</li>
