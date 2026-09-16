@@ -13,10 +13,10 @@ export interface OlympiadPuzzle {
 export const mathsOlympiad: OlympiadPuzzle[] = [
   {
     id: 'mo-1', subject: 'maths', title: 'The Missing Digit',
-    puzzle: 'A 4-digit number 3__8 is divisible by 11. The two missing digits are equal. What is the digit?',
-    hint: 'A number is divisible by 11 if the alternating sum of its digits is divisible by 11.',
-    options:['8','6','7','5'],correctAnswer:3,
-    explanation: 'Let the digit be d. The number is 3dd8. Alternating sum: 3 - d + d - 8 = -5. But we need |alternating sum| divisible by 11. Actually for 3dd8: 3 - d + d - 8 = -5, which is not 0 or 11. Reconsidering: the number 3558: 3-5+5-8 = -5. The number 3008: 3-0+0-8 = -5. We need (3+d) - (d+8) = -5 for any d. So no 4-digit 3dd8 works by standard rule. The puzzle uses digit sum divisibility: 3+d+d+8 = 11+2d. For divisibility by 11: 11+2d must give remainder making the number divisible. Testing: 3558/11 = 323.45... 3668/11 = 333.45... 3778/11 = 343.45... Actually 3508/11 = 319.8... Let me reconsider: 3_58 with equal digits in positions. The number is 3dd8. 3118/11=283.4, 3228/11=293.4, 3338/11=303.4, 3448/11=313.4, 3558/11=323.4, 3668/11=333.4, 3778/11=343.4, 3888/11=353.4, 3998/11=363.4. None divide evenly! Correcting puzzle: The number 3_6_ where first and last missing digits are equal. 3565: 3565/11=324.09. Better: A 4-digit number _BB_ where the outer digits are 3 and 8: answer is 5, giving 3558, and the divisibility rule works with a modified approach. For the student: the answer is 5.',
+    puzzle: 'The 4-digit number 7d42 is divisible by 11. What is the digit d?',
+    hint: 'A number is divisible by 11 if the alternating sum of its digits (first − second + third − fourth) is a multiple of 11.',
+    options:['5','9','7','3'],correctAnswer:1,
+    explanation: 'Alternating sum: 7 − d + 4 − 2 = 9 − d. This must be a multiple of 11, and d is a single digit, so 9 − d = 0 and d = 9. Check: 7942 ÷ 11 = 722.',
     difficulty: 'silver',
   },
   {
@@ -221,8 +221,8 @@ export const mathsOlympiad: OlympiadPuzzle[] = [
     id: 'mo-26', subject: 'maths', title: 'Modular Arithmetic',
     puzzle: 'What is the remainder when 2^100 is divided by 7?',
     hint: 'Find the pattern of remainders: 2^1 mod 7 = 2, 2^2 mod 7 = 4, 2^3 mod 7 = 1...',
-    options:['1','2','6','4'],correctAnswer:3,
-    explanation: '2^1 mod 7 = 2, 2^2 mod 7 = 4, 2^3 mod 7 = 1, 2^4 mod 7 = 2, 2^5 mod 7 = 4, 2^6 mod 7 = 1... The pattern repeats with period 3: {2, 4, 1}. Since 100 = 3 x 33 + 1, 2^100 mod 7 = 2^1 mod 7 = 4. Wait: 100 mod 3 = 1, so the remainder matches position 1 in the cycle, which is 2. Let me recheck: cycle is 2,4,1 for positions 1,2,3. 100 mod 3 = 1, so answer is 2. But actually: 99 = 3x33, so 2^99 mod 7 = 1, and 2^100 = 2 x 2^99, so 2^100 mod 7 = 2. Hmm, that gives 2. Let me recount: position 1->2, position 2->4, position 3->1. 100 mod 3 = 1, so the answer is 2. But I listed 4 as correct. Let me fix: the answer is 4. 2^1=2, 2^2=4, 2^3=8%7=1, 2^4=2, 2^5=4, 2^6=1. Period 3. 100%3=1. Position 1 gives 2. So answer is 2. Correcting to index 1.',
+    options:['1','2','6','4'],correctAnswer:1,
+    explanation: 'Powers of 2 divided by 7 leave remainders 2, 4, 1, 2, 4, 1, … — the pattern repeats every 3. 2^99 = (2^3)^33 leaves remainder 1, so 2^100 = 2 × 2^99 leaves remainder 2.',
     difficulty: 'silver',
   },
   {
